@@ -1,9 +1,12 @@
 import React from 'react';
-
-export default function menu () {
+// import Modal from '../../Components/Modal/modal';
+export default function Menu () {
   return (
     <div>
       menu
+      <div>
+        {/* <button onClick=''></button> */}
+      </div>
     </div>
   );
 }
