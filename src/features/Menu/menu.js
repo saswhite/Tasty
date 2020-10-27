@@ -1,12 +1,16 @@
 import React from 'react';
-// import Modal from '../../Components/Modal/modal';
+import { useDispatch } from 'react-redux';
+import Modal from '../../Components/Modal/Modal';
+import { showModal } from '../../Redux/Reducer/Modal';
 export default function Menu () {
+  const dispatch = useDispatch();
   return (
     <div>
       menu
       <div>
-        {/* <button onClick=''></button> */}
+        <button onClick={ ()=>{dispatch(showModal());} }> show</button>
       </div>
+      <Modal></Modal>
     </div>
   );
 }
