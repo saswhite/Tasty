@@ -2,6 +2,7 @@
 
 button {
   cursor : pointer;
+  outline : none;
 }
 
 .header {
@@ -76,6 +77,13 @@ button {
     }
     .log-out {
       margin-top : 30px;
+    }
+    .mask {
+      position : absolute;
+      top : 0;
+      left : 0;
+      width : 220px;
+      height : 214px;
     }
   }
 }
