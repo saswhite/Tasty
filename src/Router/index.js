@@ -3,9 +3,10 @@ import React from 'react';
 /* pages */
 import Login from '../Features/Login/login';
 import Regist from '../Features/Regist/regist';
-import Restaurant from '../Features/Restaurant/restaurant';
+import Restaurant from '../Features/Restaurant/Restaurant';
 import Menu from '../Features/Menu/menu';
 import Counter from '../Features/Counter/Counter';
+import Order from '../Features/Order/Order';
 
 export const routerConfig = [
   {
@@ -23,6 +24,10 @@ export const routerConfig = [
   {
     path:'/menu',
     component:Menu
+  },
+  {
+    path:'/order',
+    component:Order
   },
   {
     path:'/counter',
