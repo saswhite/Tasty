@@ -5,11 +5,14 @@ import App from './App';
 import store from './Redux/Store/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
+/**  components */
+import Loading from './Components/Loading/Loading';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={ store }>
       <App />
+      <Loading/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

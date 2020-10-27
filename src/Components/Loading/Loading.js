@@ -11,11 +11,9 @@ export default function Loading () {
   const isLoading = useSelector(selectIsLoading);
 
   return (
-    <div>
-      { isLoading } ?
+    isLoading  ?
       <div className='loading'>
         <img src={ loadingLocal } className='loading-container' alt='loading'></img>
       </div> : null
-    </div>
   );
 }
