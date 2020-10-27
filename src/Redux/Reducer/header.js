@@ -3,15 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 export const headerSlice = createSlice({
   name: 'header',
   initialState: {
-    isTransform: false,
+    language: '',
     isClick: false
   },
   reducers: {
-    showCh: state => {
-      state.isTransform = false;
+    showZh: state => {
+      state.language = 'zh';
     },
     showEn: state => {
-      state.isTransform =  true;
+      state.language =  'en';
     },
     showProfile: state => {
       state.isClick =  true;
@@ -22,9 +22,9 @@ export const headerSlice = createSlice({
   },
 });
 
-export const { showCh, showEn,showProfile,hideProfile } = headerSlice.actions;
+export const { showZh, showEn,showProfile,hideProfile } = headerSlice.actions;
 
-export const isTransform = state => state.header.isTransform;
+export const language = state => state.header.language;
 
 export const isClick = state => state.header.isClick;
 
