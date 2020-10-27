@@ -13,7 +13,10 @@ export default function Loading () {
   return (
     isLoading  ?
       <div className='loading'>
-        <img src={ loadingLocal } className='loading-container' alt='loading'></img>
+        <div className='loading-opacityContainer'></div>
+        <div className='loading-container'>
+          <img src={ loadingLocal }  alt='loading'></img>
+        </div>
       </div> : null
   );
 }

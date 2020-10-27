@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import Modal from '../../Components/Modal/Modal';
 import { showModal } from '../../Redux/Reducer/Modal';
-export default function Menu () {
+export default function Menu (){
   const dispatch = useDispatch();
   return (
     <div>
