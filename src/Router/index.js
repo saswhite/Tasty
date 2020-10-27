@@ -5,7 +5,7 @@ import Login from '../Features/Login/login';
 import Regist from '../Features/Regist/regist';
 import Restaurant from '../Features/Restaurant/restaurant';
 import Menu from '../Features/Menu/menu';
-import Counter from '../Features/counter/Counter';
+import Counter from '../Features/Counter/Counter';
 
 export const routerConfig = [
   {
