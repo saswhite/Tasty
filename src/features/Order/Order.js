@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function Restaurant () {
+export default function Order () {
   return (
     <div>
-      restaurant
+      Order
     </div>
   );
 }
