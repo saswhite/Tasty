@@ -5,12 +5,14 @@ import counterReducer from '../../Features/Counter/state/reducer';
 import  modalReducer from '../Reducer/Modal';
 import loadingReducer from '../Reducer/loading';
 import headerReducer from '../Reducer/header';
+import errorReducer from '../Reducer/error';
 
 export default configureStore({
   reducer: {
     counter: counterReducer,
     modal:modalReducer,
     loading:loadingReducer,
-    header: headerReducer
+    header: headerReducer,
+    error:errorReducer
   },
 });

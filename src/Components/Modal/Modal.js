@@ -6,12 +6,29 @@ import { isShow ,hideModal } from '../../Redux/Reducer/Modal';
 export default function Modal () {
   const isTrue = useSelector(isShow);
   const dispatch = useDispatch();
+
+  /* 注册 */
+  function regist (){
+    dispatch(hideModal());
+  }
+
   return (
     isTrue ?
       <div className={ 'modal' }>
         <div className={ 'modal-box' }>
-          <span>message</span>
-          <button onClick={ ()=>{dispatch(hideModal());} }>确认</button>
+          <div className='input-box'>
+            <div className='input-title'> 用户名 </div>
+            <input className='input'></input>
+          </div>
+          <div className='input-box'>
+            <div className='input-title'> 密码 </div>
+            <input className='input'></input>
+          </div>
+          <div className='input-box'>
+            <div className='input-title'> 确认 </div>
+            <input className='input'></input>
+          </div>
+          <button onClick={ regist } className='normal-btn regist-btn' >注册</button>
         </div>
       </div> : null
   );

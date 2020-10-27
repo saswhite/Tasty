@@ -5,14 +5,17 @@ import App from './App';
 import store from './Redux/Store/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
+
 /**  components */
 import Loading from './Components/Loading/Loading';
+import Error from './Components/Error/Error';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={ store }>
       <App />
       <Loading/>
+      <Error/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
