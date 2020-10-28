@@ -1,39 +1,67 @@
-import React from 'react';
+import React, { useState  } from 'react';
+import intl from 'react-intl-universal';
 import './modal.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { isShow ,hideModal } from '../../Redux/Reducer/Modal';
+import { isShow,postRegist,hideModal  } from '../../Redux/Reducer/Modal';
 import { showErrorAsync } from '../../Redux/Reducer/error';
+import { encode } from '../../Common/crypto';
 
 export default function Modal () {
   const isTrue = useSelector(isShow);
 
   const dispatch = useDispatch();
 
+  const [ registInfo,setRegistInfo ] = useState({
+    username:'',
+    password:'',
+    checkPwd:''
+  });
+
   /* 注册 */
-  function regist (){
-    dispatch(hideModal());
+  async function registBtn (){
+    const nameReg = /^[a-zA-Z0-9_-]{4,16}$/;
+    const pwdReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/;
+    /* 验证用户名 */
+    if(nameReg.test(registInfo.username)){
+      /* 验证密码 */
+      if(pwdReg.test(registInfo.password)){
+        /* 检查密码 */
+        if(registInfo.password === registInfo.checkPwd){
+          const info = { username:encode(registInfo.username),password:encode(registInfo.password) };
+          let result = dispatch(postRegist(info));
+          if(result){
+            setRegistInfo({});
+          }
+        }else{
+          dispatch(showErrorAsync(intl.get('login.error.comfirmPassword')));
+        }
+      }else{
+        dispatch(showErrorAsync(intl.get('login.error.password')));
+      }
+    }else{
+      dispatch(showErrorAsync(intl.get('login.error.name')));
+    }
   }
 
   return (
     isTrue ?
-      <div className={ 'modal' }>
-        <div className={ 'modal-box' }>
+    /* 点击外面隐藏模态框 清空数据 */
+      <div className={ 'modal' } onClick={ ()=>{dispatch(hideModal()); setRegistInfo({});} }  >
+        {/* 阻止事件冒泡 */}
+        <div className={ 'modal-box' } onClick={ (e)=>{e.stopPropagation();} }>
           <div className='input-box'>
-            <div className='input-title'> 用户名 </div>
-            <input className='input'></input>
+            <div className='input-title'> {intl.get('login.username')}  </div>
+            <input className='input' value={ registInfo.username || '' } onChange={ (e)=>{setRegistInfo({ ...registInfo,username:e.target.value });} }></input>
           </div>
           <div className='input-box'>
-            <div className='input-title'> 密码 </div>
-            <input className='input'></input>
+            <div className='input-title'> {intl.get('login.password')} </div>
+            <input className='input' type='password' value={ registInfo.password || '' } onChange={ (e)=>{setRegistInfo({ ...registInfo,password:e.target.value });} }></input>
           </div>
           <div className='input-box'>
-            <div className='input-title'> 确认 </div>
-            <input className='input'></input>
+            <div className='input-title'> {intl.get('login.confirmPassword')} </div>
+            <input className='input' type='password' value={ registInfo.checkPwd || '' } onChange={ (e)=>{setRegistInfo({ ...registInfo,checkPwd:e.target.value });} }></input>
           </div>
-          <button className='normal-btn' onClick={ ()=>{
-            dispatch(showErrorAsync('请输入正确的用户名，4到16位，字母，数字，下划线，减号。'));
-          } }>开启error模态框</button>
-          <button onClick={ regist } className='normal-btn regist-btn' >注册</button>
+          <button onClick={ registBtn } className='normal-btn regist-btn' >{intl.get('login.signUp')}</button>
         </div>
       </div> : null
   );

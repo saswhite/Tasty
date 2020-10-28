@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { showLoading,hideLoading } from '../../../Redux/Reducer/loading';
 import { showErrorAsync } from '../../../Redux/Reducer/error';
 import { login } from '../../../Request/login';
+import { setStorage } from '../../../Common/utils';
 
 export const loginSlice = createSlice({
   name: 'login',
@@ -18,14 +19,22 @@ export const loginSlice = createSlice({
 
 export const { userInfo } = loginSlice.actions;
 
-export const getUserInfo = ()=>{
+/**  发送登录请求 */
+export const sendRequestLogin = (data)=>{
 
   return async (dispatch)=>{
 
     try {
       dispatch(showLoading());
 
-      await login();
+      const loginRes = await login(data);
+
+      /** 存入locastorage */
+      setStorage('user',loginRes);
+
+      dispatch(userInfo(loginRes));
+
+      return true;
 
     } catch (error) {
 
@@ -37,6 +46,6 @@ export const getUserInfo = ()=>{
   };
 };
 
-export const user = state => state.user.user;
+export const user = state => state.login.user;
 
 export default loginSlice.reducer;

@@ -19,6 +19,7 @@ export const errorSlice = createSlice({
 
 export const { showError, hideError } = errorSlice.actions;
 
+/** 实时更改error框的message */
 export const showErrorAsync = ( message )=>{
 
   return (dispatch)=>{

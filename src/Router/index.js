@@ -1,7 +1,7 @@
 import React from 'react';
 
 /* pages */
-import Login from '../Features/Login/Login';
+import Login from '../Features/Login/login';
 import Restaurant from '../Features/Restaurant/Restaurant';
 import Menu from '../Features/Menu/Menu';
 import Counter from '../Features/Counter/Counter';
