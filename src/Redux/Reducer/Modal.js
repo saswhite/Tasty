@@ -24,7 +24,9 @@ export  function postRegist (registInfo){
     try {
       dispatch(showLoading());
       await regist(registInfo);
+      dispatch(hideModal());
       dispatch(showErrorAsync(intl.get('login.signUpSuccess')));
+      return true;
     } catch (error) {
       dispatch(showErrorAsync(error.message));
     }finally{
