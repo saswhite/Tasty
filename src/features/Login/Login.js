@@ -22,11 +22,18 @@ import Header from '../../Components/Header/Header';
 /** 登录页面 */
 export default function Login () {
   const lan = useSelector(language);
+
   const dispatch = useDispatch();
   const history = useHistory();
 
   const [ name,setName ] = useState('');
   const [ password,setPassword ] = useState('');
+
+  useEffect(()=>{
+    init();
+    console.log(get('login.username'));
+  },[]);
+
   useEffect(()=>{
     init();
   },[ lan ]);
@@ -76,10 +83,6 @@ export default function Login () {
 
     dispatch(showModal());
   }
-
-  useEffect(()=>{
-    init();
-  },[ lan ]);
 
   return (
     <div>

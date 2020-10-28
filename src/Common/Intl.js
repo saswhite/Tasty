@@ -17,8 +17,6 @@ export function setEn () {
     locales,
   });
 
-  localStorage.setItem('language','en-US');
-
 }
 export function setCh () {
 
@@ -26,8 +24,6 @@ export function setCh () {
     currentLocale: 'zh-CN', // TODO: determine locale here
     locales,
   });
-
-  localStorage.setItem('language','zh-CN');
 
 }
 
@@ -37,7 +33,7 @@ export function get (string){
 
 export function init (){
   let lan = localStorage.getItem('language');
-  if(lan === 'en'){
+  if(lan === 'en-US'){
     setEn();
   }else {
     setCh();

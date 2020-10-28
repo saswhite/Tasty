@@ -1,4 +1,7 @@
 import React,{ useEffect } from 'react';
+
+import { useHistory } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 
 import { get,init } from '../../Common/Intl';
@@ -22,9 +25,10 @@ export default function RestBox ({ data }) {
 
   let lan = useSelector(language);
 
+  let history = useHistory();
+
   useEffect(() => {
-    console.log(defaultItems[0].image);
-    // console.log(data.items[1].image.url);
+    init();
   }, []);
 
   useEffect(() => {
@@ -32,7 +36,10 @@ export default function RestBox ({ data }) {
   }, [ lan ]);
 
   return (
-    <div className="rest-box">
+    <div className="rest-box"
+      onClick={ ()=>{
+        history.push(`/menu/${data._id}`);
+      } }>
       <div className="titleText">{data.name[`${lan}`]}</div>
       <div className="subTitleText">{get(`tags.${data.tags[0]}`)}</div>
       <div>
