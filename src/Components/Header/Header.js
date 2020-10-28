@@ -1,4 +1,4 @@
-import React,{ useEffect } from 'react';
+import React,{ useEffect,useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation,useHistory } from 'react-router-dom';
 
@@ -23,6 +23,8 @@ export default function Header () {
 
   let initLan = localStorage.getItem('language');
 
+  let [ isLogout,setIsLogout ] = useState(false);
+
   let lan = useSelector(language);
 
   let isShow = useSelector(isClick);
@@ -41,7 +43,7 @@ export default function Header () {
     dispatch(showLoading());
     setInterval(() => {
       dispatch(hideLoading());
-    },300);
+    },500);
     history.push('/order');
   };
 
@@ -71,6 +73,62 @@ export default function Header () {
     return actualTop;
   };
 
+  /* profile窗口 */
+  let renderProfile = ()=>{
+    if(isShow){
+      return (<div className="profile-drop-down">
+        { renderHistoryBtn() }
+        <div className="language-button">
+          <button
+            onClick={ async ()=>{await setCh(); dispatch(showZh());} }
+            id={ lan === 'zh' || initLan === 'zh' ? 'on-choose' : '' } type="button">中</button>
+          <button onClick={ async ()=>{await setEn(); dispatch(showEn());}  }
+            id={ lan === 'en' || initLan === 'en' ? 'on-choose' : '' } type="button">En</button>
+        </div>
+        { renderLogoutBtn() }
+      </div>);
+    }else {
+      return null;
+    }
+  };
+
+  /* 历史订单按钮 */
+  let renderHistoryBtn = ()=>{
+    if(isLogout){
+      return (<button
+        className="profile-button log-out"
+        onClick={ ()=>{
+          setIsLogout(true);
+          history.push('/login');
+        } }
+        type="button">{get('login.login')}</button>);
+    }else {
+      if(location.pathname !== orderPass[0] && location.pathname !== orderPass[1]){
+        return (<button className="order-btn"
+          onClick={ pushOrder }
+          type="button">
+          {get('order').title}
+        </button>);
+      }else {
+        return null;
+      }
+    }
+  };
+
+  /* 登出按钮 */
+  let renderLogoutBtn = ()=>{
+    if(location.pathname !== loginPass[0] && isLogout === false){
+      return (<button
+        className="profile-button log-out"
+        onClick={ ()=>{
+          setIsLogout(true);
+        } }
+        type="button">{get('logout')}</button>);
+    }else {
+      return null;
+    }
+  };
+
   useEffect(() => {
     /* 给页面加点击事件 */
     document.addEventListener('mousedown', (e)=>{
@@ -98,27 +156,7 @@ export default function Header () {
           onClick={ ()=>{
             dispatch(showProfile());
           } }/>
-        { isShow ? (<div className="profile-drop-down">
-          { location.pathname !== orderPass[0] && location.pathname !== orderPass[1] ?
-            (<button className="order-btn"
-              onClick={ pushOrder }
-              type="button">
-              {get('order').title}
-            </button>) : null}
-          <div className="language-button">
-            <button
-              onClick={ async ()=>{await setCh(); dispatch(showZh());} }
-              id={ lan === 'zh' || initLan === 'zh' ? 'on-choose' : '' } type="button">中</button>
-            <button onClick={ async ()=>{await setEn(); dispatch(showEn());}  }
-              id={ lan === 'en' || initLan === 'en' ? 'on-choose' : '' } type="button">En</button>
-          </div>
-          {location.pathname !== loginPass[0] ? (<button
-            className="profile-button log-out"
-            onClick={ ()=>{
-              history.push('/login');
-            } }
-            type="button">{get('logout')}</button>) : null}
-        </div>) : null}
+        {  renderProfile() }
       </div>
     </div>
   );
