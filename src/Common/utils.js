@@ -12,3 +12,4 @@ export function getStorage (key) {
     return res;
   }
 }
+
