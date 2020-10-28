@@ -4,16 +4,7 @@ import './modal.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { isShow,postRegist,hideModal  } from '../../Redux/Reducer/Modal';
 import { showErrorAsync } from '../../Redux/Reducer/error';
-import crypto from 'crypto';
-
-/* 加密用户名，密码 */
-export function encode (str){
-
-  const cipher = crypto.createCipher('aes192', 'deliveryIsen');
-  var crypted = cipher.update(str, 'utf8', 'hex');
-  crypted += cipher.final('hex');
-  return crypted;
-}
+import { encode } from '../../Common/crypto';
 
 export default function Modal () {
   const isTrue = useSelector(isShow);
@@ -30,11 +21,17 @@ export default function Modal () {
   async function registBtn (){
     const nameReg = /^[a-zA-Z0-9_-]{4,16}$/;
     const pwdReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/;
+    /* 验证用户名 */
     if(nameReg.test(registInfo.username)){
+      /* 验证密码 */
       if(pwdReg.test(registInfo.password)){
+        /* 检查密码 */
         if(registInfo.password === registInfo.checkPwd){
           const info = { username:encode(registInfo.username),password:encode(registInfo.password) };
-          dispatch(postRegist(info));
+          let result = dispatch(postRegist(info));
+          if(result){
+            setRegistInfo({});
+          }
         }else{
           dispatch(showErrorAsync(intl.get('login.error.comfirmPassword')));
         }
@@ -42,15 +39,14 @@ export default function Modal () {
         dispatch(showErrorAsync(intl.get('login.error.password')));
       }
     }else{
-
       dispatch(showErrorAsync(intl.get('login.error.name')));
     }
   }
 
   return (
     isTrue ?
-    /* 点击外面隐藏模态框 */
-      <div className={ 'modal' } onClick={ ()=>{dispatch(hideModal());} }  >
+    /* 点击外面隐藏模态框 清空数据 */
+      <div className={ 'modal' } onClick={ ()=>{dispatch(hideModal()); setRegistInfo({});} }  >
         {/* 阻止事件冒泡 */}
         <div className={ 'modal-box' } onClick={ (e)=>{e.stopPropagation();} }>
           <div className='input-box'>

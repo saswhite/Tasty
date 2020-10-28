@@ -1,5 +1,6 @@
 @import '../../Style/public.scss';
 
+
 .modal{
   position : fixed;
   top :0;
@@ -41,6 +42,7 @@
     
     width : 300px;
     margin-top : 80px;
-
+    color :$white !important;
+    background-color : black !important;
   }
 }
