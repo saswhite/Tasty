@@ -19,7 +19,7 @@ const fetch = (options) => {
   // const token = '5f9138b87cac8518b1099c29';
 
   if (token) {
-    headers.user = `${token}`;
+    headers.Authorization = `${token}`;
   }
 
   headers['Content-Type'] = 'application/json';
