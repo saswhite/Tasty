@@ -1,13 +1,17 @@
-import React from 'react';
+import React,{ useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { showLoading } from '../../Redux/Reducer/loading';
 import { showErrorAsync } from '../../Redux/Reducer/error';
+import { getUserInfo } from './state/reducer';
 
 /** scss */
 import './login.scss';
 export default function Login () {
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserInfo());
+  }, []);
 
   return (
     <div>
