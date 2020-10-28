@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { showLoading,hideLoading } from '../../../Redux/Reducer/loading';
 import { showErrorAsync } from '../../../Redux/Reducer/error';
+import { login } from '../../../Request/login';
 
 export const loginSlice = createSlice({
   name: 'login',
@@ -19,14 +20,16 @@ export const { userInfo, decrement, incrementByAmount } = loginSlice.actions;
 
 export const getUserInfo = ()=>{
 
-  return (dispatch)=>{
+  return async (dispatch)=>{
 
     try {
       dispatch(showLoading());
 
+      await login();
+
     } catch (error) {
 
-      dispatch(showErrorAsync('eee'));
+      dispatch(showErrorAsync(error.message));
     }finally{
 
       dispatch(hideLoading());
