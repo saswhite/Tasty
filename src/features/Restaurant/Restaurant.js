@@ -6,6 +6,8 @@ import _ from 'lodash';
 
 import { v4 } from 'uuid';
 
+import moment from 'moment-timezone';
+
 /* component */
 import Header from '../../Components/Header/Header';
 import RestBox from '../../Components/RestBox/RestBox';
@@ -22,12 +24,45 @@ export default function Restaurant () {
 
   let rest = useSelector(restdata);
 
-  useEffect(() => {
+  useEffect( () => {
     dispatch(renderRestList());
   }, []);
 
+  /* 排序 */
+  // function restOrder (){
+  // return  _.orderBy(rest.list,[ 'featured' ],[ 'desc' ]);
+  // }
+
   let renderRestBox = ()=>{
-    return _.map(rest.list,(item=>{
+    let array = [];
+    if(rest.list){
+      array = _.orderBy(rest.list,[ 'featured','zscore' ],[ 'desc','desc' ]);
+      let date = new Date();
+      var newYork = moment.tz(date, array[0].timezone);
+      const time = new Date(newYork._d);
+      let checkTime = time.getHours() * 60 + time.getMinutes();
+      console.log(checkTime);
+      // let timeResult = {
+      //   week:[],
+      //   hour:[]
+      // };
+      // _.map(array,(item,index)=>{
+      // _.map(item.hours,(hourItem,hourIndex)=>{
+      //   if(_.includes(hourItem, 2)){
+      //     // timeResult.weekClose = '';
+      //     if(hourItem.start >= checkTime || hourItem.end <= checkTime){
+      //       timeResult.hour.push(hourIndex);
+      //     }
+      //   }else{
+      //     console.log(index,hourIndex);
+      //   }
+      // });
+
+      // });
+      // console.log(timeResult);
+    }
+
+    return _.map(array,(item=>{
       return (
         <div key={ v4() }>
           <RestBox data={ item } ></RestBox>
