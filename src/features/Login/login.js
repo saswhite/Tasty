@@ -1,10 +1,12 @@
 import React,{ useState ,useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-// import intl from 'react-intl-universal';
-import{ init,get  } from '../../Common/Intl';
+
+/** 加密 */
 import { encode } from '../../Common/crypto';
+/** 语言 */
 import { language  } from '../../Redux/Reducer/header';
+import{ init,get  } from '../../Common/Intl';
 
 /** action */
 import { showErrorAsync } from '../../Redux/Reducer/error';
@@ -66,6 +68,8 @@ export default function Login () {
     }else if(!passwordRes){
 
       dispatch(showErrorAsync(get('login.error.password')));
+      /** 密码错误 情况密码框 */
+      setPassword('');
     }
   }
 
