@@ -51,15 +51,15 @@ export default function Modal () {
         <div className={ 'modal-box' } onClick={ (e)=>{e.stopPropagation();} }>
           <div className='input-box'>
             <div className='input-title'> {intl.get('login.username')}  </div>
-            <input className='input' value={ registInfo.username } onChange={ (e)=>{setRegistInfo({ ...registInfo,username:e.target.value });} }></input>
+            <input className='input' value={ registInfo.username || '' } onChange={ (e)=>{setRegistInfo({ ...registInfo,username:e.target.value });} }></input>
           </div>
           <div className='input-box'>
             <div className='input-title'> {intl.get('login.password')} </div>
-            <input className='input' type='password' value={ registInfo.password } onChange={ (e)=>{setRegistInfo({ ...registInfo,password:e.target.value });} }></input>
+            <input className='input' type='password' value={ registInfo.password || '' } onChange={ (e)=>{setRegistInfo({ ...registInfo,password:e.target.value });} }></input>
           </div>
           <div className='input-box'>
             <div className='input-title'> {intl.get('login.confirmPassword')} </div>
-            <input className='input' type='password' value={ registInfo.checkPwd } onChange={ (e)=>{setRegistInfo({ ...registInfo,checkPwd:e.target.value });} }></input>
+            <input className='input' type='password' value={ registInfo.checkPwd || '' } onChange={ (e)=>{setRegistInfo({ ...registInfo,checkPwd:e.target.value });} }></input>
           </div>
           <button onClick={ registBtn } className='normal-btn regist-btn' >{intl.get('login.signUp')}</button>
         </div>
