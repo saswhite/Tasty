@@ -44,7 +44,6 @@ export default function Header () {
     setInterval(() => {
       dispatch(hideLoading());
     },500);
-
     history.push('/order');
   };
 

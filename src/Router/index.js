@@ -21,7 +21,7 @@ export const routerConfig = [
     component:Menu
   },
   {
-    path:'/order/:id',
+    path:'/order',
     component:Order
   },
   {

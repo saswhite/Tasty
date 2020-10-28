@@ -31,7 +31,6 @@ export default function Login () {
 
   useEffect(()=>{
     init();
-    console.log(get('login.username'));
   },[]);
 
   useEffect(()=>{
