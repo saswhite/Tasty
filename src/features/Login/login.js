@@ -1,8 +1,12 @@
 import React,{ useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { showLoading } from '../../Redux/Reducer/loading';
 import { showErrorAsync } from '../../Redux/Reducer/error';
 import { getUserInfo } from './state/reducer';
+
+import { language } from '../../Redux/Reducer/header';
+
+import { get,init } from '../../Common/Intl';
 
 /** scss */
 import './login.scss';
@@ -12,15 +16,23 @@ import Header from '../../Components/Header/Header';
 
 export default function Login () {
 
+  let lan = useSelector(language);
+
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getUserInfo());
+    init();
   }, []);
+
+  useEffect(()=>{
+    init();
+  },[ lan ]);
 
   return (
     <div>
       <Header></Header>
-      <h1>login</h1>
+      <h1>{get('login.login')}</h1>
       <button className='normal-btn' onClick={ ()=>{
         dispatch(showLoading());
       } }>开启loading</button>
