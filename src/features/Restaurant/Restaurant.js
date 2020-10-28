@@ -32,36 +32,67 @@ export default function Restaurant () {
   // function restOrder (){
   // return  _.orderBy(rest.list,[ 'featured' ],[ 'desc' ]);
   // }
-
-  let renderRestBox = ()=>{
-    let array = [];
-    if(rest.list){
-      array = _.orderBy(rest.list,[ 'featured','zscore' ],[ 'desc','desc' ]);
-      let date = new Date();
-      var newYork = moment.tz(date, array[0].timezone);
-      const time = new Date(newYork._d);
-      let checkTime = time.getHours() * 60 + time.getMinutes();
-      console.log(checkTime);
-      // let timeResult = {
-      //   week:[],
-      //   hour:[]
-      // };
-      // _.map(array,(item,index)=>{
-      // _.map(item.hours,(hourItem,hourIndex)=>{
-      //   if(_.includes(hourItem, 2)){
-      //     // timeResult.weekClose = '';
-      //     if(hourItem.start >= checkTime || hourItem.end <= checkTime){
-      //       timeResult.hour.push(hourIndex);
-      //     }
-      //   }else{
-      //     console.log(index,hourIndex);
-      //   }
-      // });
-
-      // });
-      // console.log(timeResult);
+  function isOpen (){
+    let list = rest.list;
+    let date = new Date();
+    var newYork = moment.tz(date,'America/New_York');
+    const time = new Date(newYork._d);
+    let checkTime = time.getHours() * 60 + time.getMinutes();
+    console.log(checkTime);
+    if(list){
+      let sum = 0;
+      let newArr = _.map(list,(item,index)=>{
+        if(!item.closed){
+          _.map(item.hours,(hourItem)=>{
+            if(hourItem.dayOfWeek === newYork.day()){
+              if(hourItem.start <= checkTime && checkTime <= hourItem.end){
+                console.log('open',index);
+                item = { ...item,closed:false };
+                sum++;
+              }
+              else{
+                console.log('close',index);
+                item = { ...item,closed:true };
+              }
+            }
+            // else{
+            //   item = { ...item,closed:true };
+            //   // console.log(item);
+            // }
+          });
+        }else{
+          console.log('custom',index);
+          item = { ...item,closed:true };
+        }
+        return item;
+      });
+      console.log(sum);
+      return newArr;
     }
 
+  }
+
+  let renderRestBox = ()=>{
+
+    let array = isOpen();
+    array = _.orderBy(array,[ 'closed', 'featured','zscore' ],[ 'asc','desc','desc' ]);
+
+    // let num = 0;
+    let result = _.map(array,(item)=>{
+      // if(item.closed == false){
+      //   return  num++;
+      // }
+      return ({
+        a:item.closed,
+        b:item.featured,
+        c:item.zscore,
+        d:item.name,
+        e:item.hours
+
+      });
+    });
+    console.log(result);
+    // console.log(array);
     return _.map(array,(item=>{
       return (
         <div key={ v4() }>

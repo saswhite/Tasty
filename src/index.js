@@ -12,14 +12,14 @@ import Error from './Components/Error/Error';
 import Modal from './Components/Modal/Modal';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={ store }>
-      <App />
-      <Loading/>
-      <Error/>
-      <Modal/>
-    </Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={ store }>
+    <App />
+    <Loading/>
+    <Error/>
+    <Modal/>
+  </Provider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 
