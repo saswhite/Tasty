@@ -17,7 +17,7 @@ export function setEn () {
     locales,
   });
 
-  localStorage.setItem('language','en');
+  localStorage.setItem('language','en-US');
 
 }
 export function setCh () {
@@ -27,7 +27,7 @@ export function setCh () {
     locales,
   });
 
-  localStorage.setItem('language','zh');
+  localStorage.setItem('language','zh-CN');
 
 }
 
@@ -43,3 +43,4 @@ export function init (){
     setCh();
   }
 }
+

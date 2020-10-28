@@ -81,9 +81,9 @@ export default function Header () {
         <div className="language-button">
           <button
             onClick={ async ()=>{await setCh(); dispatch(showZh());} }
-            id={ lan === 'zh' || initLan === 'zh' ? 'on-choose' : '' } type="button">中</button>
+            id={ lan === 'zh-CN' || initLan === 'zh-CN' ? 'on-choose' : '' } type="button">中</button>
           <button onClick={ async ()=>{await setEn(); dispatch(showEn());}  }
-            id={ lan === 'en' || initLan === 'en' ? 'on-choose' : '' } type="button">En</button>
+            id={ lan === 'en-US' || initLan === 'en-US' ? 'on-choose' : '' } type="button">En</button>
         </div>
         { renderLogoutBtn() }
       </div>);

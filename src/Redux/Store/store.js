@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 /* 局部 */
 import counterReducer from '../../Features/Counter/state/reducer';
+import restReducer from '../../Features/Restaurant/state/reducer';
 import loginReducer from '../../Features/Login/state/reducer';
 /* 全局 */
 import  modalReducer from '../Reducer/Modal';
@@ -15,6 +16,7 @@ export default configureStore({
     loading:loadingReducer,
     header: headerReducer,
     error:errorReducer,
+    rest:restReducer,
     login:loginReducer
   },
 });

@@ -3,15 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 export const headerSlice = createSlice({
   name: 'header',
   initialState: {
-    language: '',
+    language: 'zh-CN',
     isClick: false
   },
   reducers: {
     showZh: state => {
-      state.language = 'zh';
+      state.language = 'zh-CN';
     },
     showEn: state => {
-      state.language =  'en';
+      state.language =  'en-US';
     },
     showProfile: state => {
       state.isClick =  true;
