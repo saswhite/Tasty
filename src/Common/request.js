@@ -15,11 +15,12 @@ const fetch = (options) => {
   let { url } = options;
   const { data = {}, headers = {}, method } = options;
 
-  const token = _.get(getStorage('user'), '_id');
+  const token = _.get(getStorage('user'),'token');
   // const token = '5f9138b87cac8518b1099c29';
 
   if (token) {
-    headers.user = `${token}`;
+    // headers.user = `${token}`;
+    headers.Authorization = token;
   }
 
   headers['Content-Type'] = 'application/json';

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { showLoading,hideLoading } from '../../../Redux/Reducer/loading';
-// import { showErrorAsync } from '../../../Redux/Reducer/error';
-// import { login } from '../../../Request/login';
+import { showErrorAsync } from '../../../Redux/Reducer/error';
+import { hideLoading, showLoading } from '../../../Redux/Reducer/loading';
+import { getOrder } from '../../../Request/order';
 // import { setStorage } from '../../../Common/utils';
 
 export const orderSlice = createSlice({
@@ -10,12 +10,36 @@ export const orderSlice = createSlice({
     list:[]
   },
   reducers: {
-
+    updateList:(state, action) => {
+      state.list = action.payload;
+    },
   },
 });
 
-// export const {  } = orderSlice.actions;
+export const { updateList } = orderSlice.actions;
 
-export const list = state => state.order.list;
+/** 获取 历史订单列表 */
+export const getOrderList = ()=>{
+  return async (dispatch)=>{
+    try {
+      dispatch(showLoading);
+
+      const data = await getOrder();
+      console.log(data.list);
+
+      dispatch(updateList(data.list));
+
+    } catch (error) {
+
+      dispatch(showErrorAsync(error.message));
+
+    }finally{
+
+      dispatch(hideLoading);
+    }
+  };
+};
+
+export const orderList = state => state.order.list;
 
 export default orderSlice.reducer;

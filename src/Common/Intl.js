@@ -37,7 +37,7 @@ export function get (string){
 
 export function init (){
   let lan = localStorage.getItem('language');
-  if(lan === 'en'){
+  if(lan === 'en-US'){
     setEn();
   }else {
     setCh();
