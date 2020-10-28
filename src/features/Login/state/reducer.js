@@ -16,7 +16,7 @@ export const loginSlice = createSlice({
   },
 });
 
-export const { userInfo, decrement, incrementByAmount } = loginSlice.actions;
+export const { userInfo } = loginSlice.actions;
 
 export const getUserInfo = ()=>{
 
