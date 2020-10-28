@@ -1,6 +1,8 @@
 @import './size.scss';
 @import './color.scss';
-
+button,input{
+  outline : none;
+}
 
 .h1 {
   font-family : PingFangSC-Semibold;
