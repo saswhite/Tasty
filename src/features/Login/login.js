@@ -13,10 +13,6 @@ import { showErrorAsync } from '../../Redux/Reducer/error';
 import { sendRequestLogin } from './state/reducer';
 import { showModal } from '../../Redux/Reducer/Modal';
 
-import { language } from '../../Redux/Reducer/header';
-
-import { get,init } from '../../Common/Intl';
-
 /** scss */
 import './login.scss';
 
@@ -80,10 +76,6 @@ export default function Login () {
 
     dispatch(showModal());
   }
-
-  useEffect(()=>{
-    init();
-  },[ lan ]);
 
   return (
     <div>
