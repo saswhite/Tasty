@@ -18,7 +18,6 @@ import './login.scss';
 
 /* component */
 import Header from '../../Components/Header/Header';
-import Modal from '../../Components/Modal/Modal';
 
 /** 登录页面 */
 export default function Login () {
@@ -99,7 +98,6 @@ export default function Login () {
           </div>
 
         </div>
-        <Modal></Modal>
       </div>
     </div>
   );
