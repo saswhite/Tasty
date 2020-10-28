@@ -73,6 +73,9 @@
       "error":{
         "need-login":"您需要先登录。",
         "user-duplicate":"用户名重复。",
-        "auth-failed":"请重新登录。"
+        "auth-failed":"请重新登录。",
+        "timeout":"请求超时。",
+        "unknown":"未知错误。",
+        "network":"网络错误。"
       }
 }
