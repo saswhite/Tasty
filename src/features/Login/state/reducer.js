@@ -32,6 +32,8 @@ export const sendRequestLogin = (data)=>{
       /** 存入locastorage */
       setStorage('user',loginRes);
 
+      dispatch(userInfo(loginRes));
+
       return true;
 
     } catch (error) {
