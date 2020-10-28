@@ -6,6 +6,10 @@ import { getUserInfo } from './state/reducer';
 
 /** scss */
 import './login.scss';
+
+/* component */
+import Header from '../../Components/Header/Header';
+
 export default function Login () {
 
   const dispatch = useDispatch();
@@ -15,7 +19,7 @@ export default function Login () {
 
   return (
     <div>
-      login
+      <Header></Header>
       <h1>login</h1>
       <button className='normal-btn' onClick={ ()=>{
         dispatch(showLoading());

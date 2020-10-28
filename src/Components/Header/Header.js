@@ -1,6 +1,6 @@
 import React,{ useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useHistory } from 'react-router-dom';
 
 import { get,setCh,setEn,init } from '../../Common/Intl';
 
@@ -13,8 +13,13 @@ import './header.scss';
 
 /* action */
 import {  showZh,showEn,showProfile,hideProfile,isClick,language } from '../../Redux/Reducer/header';
+import { showLoading,hideLoading } from '../../Redux/Reducer/loading';
 
 export default function Header () {
+
+  let orderPass = [ '/order','/login' ];
+
+  let loginPass = [ '/login' ];
 
   let initLan = localStorage.getItem('language');
 
@@ -26,12 +31,22 @@ export default function Header () {
 
   let location = useLocation();
 
+  let history = useHistory();
+
   useEffect(() => {
     init();
   }, []);
 
+  let pushOrder = ()=>{
+    dispatch(showLoading());
+    setInterval(() => {
+      dispatch(hideLoading());
+    },300);
+    history.push('/order');
+  };
+
   /* 获取元素在页面中的绝对位置的x坐标 */
-  function getElementLeft (element){
+  let getElementLeft = (element)=>{
     var actualLeft = element.offsetLeft;
     var current = element.offsetParent;
 
@@ -41,10 +56,10 @@ export default function Header () {
     }
 
     return actualLeft;
-  }
+  };
 
   /* 获取元素在页面中的绝对位置的y坐标 */
-  function getElementTop (element){
+  let getElementTop = (element)=>{
     var actualTop = element.offsetTop;
     var current = element.offsetParent;
 
@@ -54,7 +69,7 @@ export default function Header () {
     }
 
     return actualTop;
-  }
+  };
 
   useEffect(() => {
     /* 给页面加点击事件 */
@@ -80,11 +95,16 @@ export default function Header () {
         <img
           src={ profileLogo }
           className="profile-logo"
-          onClick={ ()=>{dispatch(showProfile());} }/>
+          onClick={ ()=>{
+            dispatch(showProfile());
+          } }/>
         { isShow ? (<div className="profile-drop-down">
-          { location.pathname !== '/order' ? (<button className="order-btn" type="button">
-            {get('order').title}
-          </button>) : null}
+          { location.pathname !== orderPass[0] && location.pathname !== orderPass[1] ?
+            (<button className="order-btn"
+              onClick={ pushOrder }
+              type="button">
+              {get('order').title}
+            </button>) : null}
           <div className="language-button">
             <button
               onClick={ async ()=>{await setCh(); dispatch(showZh());} }
@@ -92,7 +112,12 @@ export default function Header () {
             <button onClick={ async ()=>{await setEn(); dispatch(showEn());}  }
               id={ lan === 'en' || initLan === 'en' ? 'on-choose' : '' } type="button">En</button>
           </div>
-          <button className="profile-button log-out" type="button">{get('logout')}</button>
+          {location.pathname !== loginPass[0] ? (<button
+            className="profile-button log-out"
+            onClick={ ()=>{
+              history.push('/login');
+            } }
+            type="button">{get('logout')}</button>) : null}
         </div>) : null}
       </div>
     </div>
