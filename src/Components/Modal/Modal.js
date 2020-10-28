@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState  } from 'react';
 import intl from 'react-intl-universal';
 import './modal.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { isShow,postRegist  } from '../../Redux/Reducer/Modal';
+import { isShow,postRegist,hideModal  } from '../../Redux/Reducer/Modal';
 import { showErrorAsync } from '../../Redux/Reducer/error';
 import crypto from 'crypto';
 
@@ -14,8 +14,6 @@ export function encode (str){
   crypted += cipher.final('hex');
   return crypted;
 }
-
-// import { regist } from '../../Request/regist';
 
 export default function Modal () {
   const isTrue = useSelector(isShow);
@@ -47,15 +45,16 @@ export default function Modal () {
 
       dispatch(showErrorAsync(intl.get('login.error.name')));
     }
-    // dispatch(hideModal());
   }
 
   return (
     isTrue ?
-      <div className={ 'modal' }>
-        <div className={ 'modal-box' }>
+    /* 点击外面隐藏模态框 */
+      <div className={ 'modal' } onClick={ ()=>{dispatch(hideModal());} }  >
+        {/* 阻止事件冒泡 */}
+        <div className={ 'modal-box' } onClick={ (e)=>{e.stopPropagation();} }>
           <div className='input-box'>
-            <div className='input-title'> {intl.get('login.username')} </div>
+            <div className='input-title'> {intl.get('login.username')}  </div>
             <input className='input' value={ registInfo.username } onChange={ (e)=>{setRegistInfo({ ...registInfo,username:e.target.value });} }></input>
           </div>
           <div className='input-box'>
