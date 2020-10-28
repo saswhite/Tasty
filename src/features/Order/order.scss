@@ -1,0 +1,8 @@
+@import '../../Style/public.scss';
+.content-box{
+  position : relative;
+  top : 100px;
+  display : flex;
+  justify-content : space-between;
+  width : 100%;
+}
