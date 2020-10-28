@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../../Features/Counter/state/reducer';
 import restReducer from '../../Features/Restaurant/state/reducer';
 import loginReducer from '../../Features/Login/state/reducer';
+import orderReducer from '../../Features/Order/state/reducer';
 /* 全局 */
 import  modalReducer from '../Reducer/Modal';
 import loadingReducer from '../Reducer/loading';
@@ -17,6 +18,7 @@ export default configureStore({
     header: headerReducer,
     error:errorReducer,
     rest:restReducer,
-    login:loginReducer
+    login:loginReducer,
+    order:orderReducer
   },
 });
