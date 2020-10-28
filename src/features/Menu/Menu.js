@@ -4,6 +4,7 @@ import { showModal } from '../../Redux/Reducer/Modal';
 
 /* component */
 import Header from '../../Components/Header/Header';
+import Cart from '../../Components/Cart/Cart';
 
 /* style */
 import './menu.scss';
@@ -17,6 +18,8 @@ export default function Menu () {
       <div>
         <button onClick={ ()=>{dispatch(showModal());} } className="top"> show</button>
       </div>
+      <Cart></Cart>
+
     </div>
   );
 }
