@@ -1,8 +1,10 @@
-import React,{ useState } from 'react';
+import React,{ useState ,useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import intl from 'react-intl-universal';
+import { useDispatch, useSelector } from 'react-redux';
+// import intl from 'react-intl-universal';
+import{ init,get  } from '../../Common/Intl';
 import { encode } from '../../Common/crypto';
+import { language  } from '../../Redux/Reducer/header';
 
 /** action */
 import { showErrorAsync } from '../../Redux/Reducer/error';
@@ -18,11 +20,15 @@ import Modal from '../../Components/Modal/Modal';
 
 /** 登录页面 */
 export default function Login () {
+  const lan = useSelector(language);
   const dispatch = useDispatch();
   const history = useHistory();
 
   const [ name,setName ] = useState('');
   const [ password,setPassword ] = useState('');
+  useEffect(()=>{
+    init();
+  },[ lan ]);
 
   /** 正则 */
   const nameReg = /^[a-zA-Z0-9_-]{4,16}$/;
@@ -55,11 +61,11 @@ export default function Login () {
 
     }else if(!nameRes){
 
-      dispatch(showErrorAsync(intl.get('login.error.name')));
+      dispatch(showErrorAsync(get('login.error.name')));
 
     }else if(!passwordRes){
 
-      dispatch(showErrorAsync(intl.get('login.error.password')));
+      dispatch(showErrorAsync(get('login.error.password')));
     }
   }
 
@@ -74,18 +80,18 @@ export default function Login () {
       <div className='center-box'>
         <div>
           <div className='input-box'>
-            <div className='input-title'> {intl.get('login.username')}</div>
+            <div className='input-title'> {get('login.username')}</div>
             <input className='input ' value={ name } onChange={ (e)=>{setName(e.target.value);} }></input>
           </div>
 
           <div className='input-box'>
-            <div className='input-title'> {intl.get('login.password')} </div>
+            <div className='input-title'> {get('login.password')} </div>
             <input className='input' type="password"  value={ password } onChange={ (e)=>{setPassword(e.target.value);} }></input>
           </div>
 
           <div className='login-btn-box container-col vertical'>
-            <button className='normal-btn login-btn' onClick={ requestLogin }>{intl.get('login.login')}</button>
-            <button className='normal-btn regist-btn' onClick={ showRegistModal }>{intl.get('login.signUp')}</button>
+            <button className='normal-btn login-btn' onClick={ requestLogin }>{get('login.login')}</button>
+            <button className='normal-btn regist-btn' onClick={ showRegistModal }>{get('login.signUp')}</button>
           </div>
 
         </div>
