@@ -31,10 +31,11 @@ export const sendRequestLogin = (data)=>{
 
       /** 存入locastorage */
       setStorage('user',loginRes);
+      console.log(loginRes);
 
       dispatch(userInfo(loginRes));
 
-      return true;
+      // return getStorage('user');
 
     } catch (error) {
 
