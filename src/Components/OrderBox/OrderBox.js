@@ -2,8 +2,8 @@ import React ,{ useEffect, useState }from 'react';
 import { useSelector } from 'react-redux';
 import propTypes from 'prop-types';
 import Moment from 'moment';
-// import _ from 'lodash';
-// import { v4 } from 'uuid';
+import _ from 'lodash';
+import { v4 } from 'uuid';
 
 /** 语言 */
 import { language  } from '../../Redux/Reducer/header';
@@ -13,57 +13,61 @@ import './orderBox.scss';
 
 export default function OrderBox ({ data }) {
   let lan = useSelector(language);
-
-  let [ cartList,setCartList ] = useState([]);
+  let [ scale,setScale ] = useState(false);
 
   useEffect(() => {
+
     init();
+
   }, [ lan ]);
 
   useEffect(()=>{
 
     getCartItemCount();
-    renderCartItem();
 
   },[]);
 
-  /** 获取每一个item 的菜单 去重 以及获取每个菜的数量 */
+  /** 获取每一个 购物车 的菜单 去重 以及获取每个菜的数量 */
   function getCartItemCount (){
-    let list = new Map();
-    // let array = [];
-    data.cart.forEach(item => {
+    let cart = data.cart;
+    let array = [];
+    for (let i = 0; i < cart.length; i++){
+      let count = 0;
+      for (let j = 0; j <= cart.length - 1; j++) {
+        if(cart[i]._id === cart[j]._id){
+          count += 1;
 
-      // let obj = { name:item.name[`${lan}`],price:item.totalPrice };
-      let obj =  { price:item.totalPrice,count:1 };
-
-      if (!item.name) {
-        //新插入一个菜单，代表这个菜第一次被点
-        list.set(item.name,{ price:item.totalPrice,count:1 });
-
-      } else {
-        //如果菜单已经存在，获取之前计算的次数，然后+1
-        list.set(item.name, { ...obj,count:obj.count + 1 });
+          array[i] = { name:cart[i].name,price:cart[i].price,count:count };
+        }
       }
-    });
+    }
 
-    /** 将 Map 转为数组 */
-    console.log(list);
-    setCartList(list);
-
-    // return setCartList([ ...list ]);
-
+    return _.uniqWith(array, _.isEqual);
   }
 
+  /**  渲染中间菜品 */
   function renderCartItem (){
-    console.log(cartList);
-    cartList.forEach((value,key)=>{
-      console.log('key',key);
-      console.log(value);
+    let list = getCartItemCount();
+    return _.map(list,(item)=>{
+      return(
+        <div className='cart-item container-row container-between' key={ v4() }>
+          <div className='cart-item-name'>{item.name[`${lan}`]}</div>
+          <div className='container-row'>
+            <div> ${ Number(item.price ) * Number(item.count) } </div>
+            <div className='cart-item-count-no-editable'>{item.count}</div>
+          </div>
+        </div>
+      );
     });
+  }
+
+  function changeScale (){
+    setScale(true);
+    console.log(scale);
   }
 
   return (
-    <div className='order-box'>
+    <div className={ `order-box ${scale ? 'order-box-bigger' : ''} ` }>
       <div className='order-title'>
         <div className='title-text order-item-name'>
           { data.restaurant.name[`${lan}`] }
@@ -81,7 +85,7 @@ export default function OrderBox ({ data }) {
           <div className='total-price'>$</div>
         </div>
         <div className='more-btn container-row-center'>
-          <button className='normal-btn'>更多</button>
+          <button className='normal-btn' onClick={ changeScale }>更多</button>
         </div>
       </div>
     </div>

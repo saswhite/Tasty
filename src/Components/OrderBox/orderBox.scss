@@ -1,13 +1,23 @@
 @import '../../Style/public.scss';
 .order-box{
+  position : relative;
   box-sizing : border-box;
   width : 220px;
   height : 390px;
   padding : 10px 20px;
   margin-bottom : 30px;
+  // margin-bottom : 30px;
   overflow : hidden;
+  // background-color : $white;
   border : 1px solid $line-grey;
   border-radius : 5px;
+  transition : all .5s ease;
+}
+.order-box-bigger{
+  z-index : 2;
+  box-sizing : border-box;
+  width : 350px;
+  height : 590px;
 }
 .order-title{
   width : 100%;
