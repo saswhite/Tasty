@@ -1,6 +1,7 @@
 import React,{ useState ,useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { getStorage } from '../../Common/utils';
 
 /** 加密 */
 import { encode } from '../../Common/crypto';
@@ -42,17 +43,18 @@ export default function Login () {
   const passwordReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/;
 
   /** 正则检测通过时，发送request post 请求 */
-  function requestLogin (){
+  async function  requestLogin (){
     let result = loginCheck();
     if(result){
 
       /** 给用户名、密码加密  */
       let loginData = { username:encode(name),password:encode(password) };
 
-      const loginRequestRes = dispatch(sendRequestLogin(loginData));
+      await dispatch(sendRequestLogin(loginData));
 
       /** 如果登录的请求发送成功 回退到从哪个页面点进login页面的*/
-      if(loginRequestRes){
+      if(getStorage('user')){
+
         history.goBack();
       }
     }
