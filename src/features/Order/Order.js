@@ -16,6 +16,8 @@ import './order.scss';
 
 export default function Order () {
 
+  console.log(1);
+
   const dispatch = useDispatch();
   const list = useSelector(orderList);
 

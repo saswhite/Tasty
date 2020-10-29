@@ -1,8 +1,12 @@
 import React,{ useEffect,useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation,useHistory } from 'react-router-dom';
+import _ from 'lodash';
 
+/* common */
 import { get,setCh,setEn,init } from '../../Common/Intl';
+import { orderPass,loginPass } from '../../Common/passurl';
+import { getStorage } from '../../Common/utils';
 
 /* image */
 import logo from '../../Assets/logo.png';
@@ -17,11 +21,9 @@ import { showLoading,hideLoading } from '../../Redux/Reducer/loading';
 
 export default function Header () {
 
-  let orderPass = [ '/order','/login' ];
+  let initLan = getStorage('language');
 
-  let loginPass = [ '/login' ];
-
-  let initLan = localStorage.getItem('language');
+  let initUser = getStorage('user');
 
   let [ isLogout,setIsLogout ] = useState(false);
 
@@ -37,6 +39,7 @@ export default function Header () {
 
   useEffect(() => {
     init();
+    renderHistoryBtn();
   }, []);
 
   let pushOrder = ()=>{
@@ -44,7 +47,6 @@ export default function Header () {
     setInterval(() => {
       dispatch(hideLoading());
     },500);
-
     history.push('/order');
   };
 
@@ -95,7 +97,7 @@ export default function Header () {
 
   /* 历史订单按钮 */
   let renderHistoryBtn = ()=>{
-    if(isLogout){
+    if(isLogout && !initUser){
       return (<button
         className="profile-button log-out"
         onClick={ ()=>{
@@ -103,8 +105,8 @@ export default function Header () {
           history.push('/login');
         } }
         type="button">{get('login.login')}</button>);
-    }else {
-      if(location.pathname !== orderPass[0] && location.pathname !== orderPass[1]){
+    }else if(initUser) {
+      if(! _.has(orderPass,location.pathname)){
         return (<button className="order-btn"
           onClick={ pushOrder }
           type="button">
@@ -118,11 +120,12 @@ export default function Header () {
 
   /* 登出按钮 */
   let renderLogoutBtn = ()=>{
-    if(location.pathname !== loginPass[0] && isLogout === false){
+    if((!_.has(loginPass,location.pathname) && isLogout === false) && initUser){
       return (<button
         className="profile-button log-out"
         onClick={ ()=>{
           setIsLogout(true);
+          localStorage.removeItem('user');
         } }
         type="button">{get('logout')}</button>);
     }else {
