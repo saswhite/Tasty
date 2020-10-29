@@ -4,6 +4,7 @@ import counterReducer from '../../Features/Counter/state/reducer';
 import restReducer from '../../Features/Restaurant/state/reducer';
 import loginReducer from '../../Features/Login/state/reducer';
 import orderReducer from '../../Features/Order/state/reducer';
+import menuReducer from '../../Features/Menu/state/reducer';
 /* 全局 */
 import  modalReducer from '../Reducer/Modal';
 import loadingReducer from '../Reducer/loading';
@@ -19,6 +20,7 @@ export default configureStore({
     error:errorReducer,
     rest:restReducer,
     login:loginReducer,
-    order:orderReducer
+    order:orderReducer,
+    menu:menuReducer
   },
 });

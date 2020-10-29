@@ -152,7 +152,7 @@ export default function Header () {
   return (
     <div className="header">
       <div className="container-between vertical left">
-        <img src={ logo } alt="" className="logo"/>
+        <img src={ logo } alt="" className="logo" onClick={ ()=>{history.push('/restaurant');} }/>
       </div>
       <div>
         <img

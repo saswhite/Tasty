@@ -12,7 +12,7 @@ import _ from 'lodash';
 
 import { defaultItems } from '../../Common/defaultItems';
 
-import { getStorage } from '../../Common/utils';
+import { getStorage,setStorage } from '../../Common/utils';
 
 /* action */
 import { language } from '../../Redux/Reducer/header';
@@ -44,6 +44,7 @@ export default function RestBox ({ data }) {
   return (
     <div className="rest-box"
       onClick={ ()=>{
+        setStorage('restaurant',data);
         history.push(`/menu/${data._id}`);
       } }
       onMouseOver={ ()=>{

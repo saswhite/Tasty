@@ -39,16 +39,13 @@ export default function Restaurant () {
   }, [ lan ]);
 
   /* 排序 */
-  // function restOrder (){
-  // return  _.orderBy(rest.list,[ 'featured' ],[ 'desc' ]);
-  // }
   function isOpen (){
     let list = rest.list;
     let date = new Date();
     var newYork = moment.tz(date,'America/New_York');
     const time = new Date(newYork._d);
     let checkTime = time.getHours() * 60 + time.getMinutes();
-    console.log(checkTime);
+
     if(list){
       let newArr = _.map(list,(item)=>{
         if(!item.closed){
@@ -73,26 +70,13 @@ export default function Restaurant () {
   }
 
   let renderRestBox = ()=>{
-
     let array = isOpen();
     array = _.orderBy(array,[ 'closed', 'featured','zscore' ],[ 'asc','desc','desc' ]);
-    let result = _.map(array,(item)=>{
-      return ({
-        a:item.closed,
-        b:item.featured,
-        c:item.zscore,
-        d:item.name,
-        e:item.hours
-
-      });
-    });
-    console.log(result);
     return _.map(array,((item,index)=>{
       return (
         <div key={ v4() } style={{ paddingTop :(index + 1 ) % 2 === 0 ? '236px' : '' }}>
           <RestBox data={ item } ></RestBox>
         </div>
-
       );
     }));
   };

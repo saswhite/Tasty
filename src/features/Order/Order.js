@@ -18,8 +18,6 @@ import './order.scss';
 
 export default function Order () {
 
-  console.log(1);
-
   let lan = useSelector(language);
 
   const dispatch = useDispatch();
