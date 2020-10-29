@@ -1,10 +1,11 @@
 .rest-box {
+  box-sizing : border-box;
   min-width : 250px;
-  max-width : 250px;
+  max-width : 300px;
   min-height : 440px;
   max-height : 600px;
   padding : 20px;
-  margin-bottom : 91px;
+  margin-bottom : -110px;
   .titleText{
     font-family : PingFangSC-Regular;
     font-size : 30px;
@@ -78,6 +79,7 @@
         top : 140px;
         left : 45.6%;
         width : 40.9%;
+        transition : left linear .2s;
       }
       .img-box3{
         position : relative;
@@ -86,5 +88,13 @@
         width : 32.6%
       }
     }
-  
+}
+
+.rest-box:hover {
+    border-radius : 10px;
+    box-shadow : 0 2px 10px 0 hsla(0,0%,81.6%,.5);
+}
+
+.rest-box:hover .img-box2 {
+  left : 63%;
 }
