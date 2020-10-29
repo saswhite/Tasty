@@ -37,10 +37,10 @@ export default function Order () {
 
   /** 渲染右侧历史订单列表 */
   function renderOrderList (){
-    return _.map(list,(item)=>{
+    return _.map(list,(item,index)=>{
       return (
-        <div key={ v4() }>
-          <OrderBox data={ item }></OrderBox>
+        <div key={ v4() } className='container-row-center'>
+          <OrderBox data={ item } index={ index }></OrderBox>
         </div>
       );
     });
