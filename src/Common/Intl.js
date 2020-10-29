@@ -10,13 +10,15 @@ const locales = {
   'zh-CN': require('../Locales/zh-CN.json'),
 };
 
+import { setStorage,getStorage } from './utils';
+
 export function setEn () {
 
   intl.init({
     currentLocale: 'en-US', // TODO: determine locale here
     locales,
   });
-
+  setStorage('language','en-US');
 }
 export function setCh () {
 
@@ -24,7 +26,7 @@ export function setCh () {
     currentLocale: 'zh-CN', // TODO: determine locale here
     locales,
   });
-
+  setStorage('language','zh-CN');
 }
 
 export function get (string){
@@ -32,8 +34,8 @@ export function get (string){
 }
 
 export function init (){
-  let lan = localStorage.getItem('language');
-  if(lan === 'en-US'){
+  let initlan = getStorage('language');
+  if(initlan === 'en-US'){
     setEn();
   }else {
     setCh();

@@ -2,11 +2,14 @@ import React from 'react';
 import './App.css';
 import PrivateRouter from './Common/PrivateRouter';
 
+import { getStorage } from './Common/utils';
+
 import intl from 'react-intl-universal';
 import zh from './Locales/zh-CN.json';
 import en from './Locales/en-US.json';
 
-let lang = localStorage.getItem('language') || (navigator.languages && navigator.languages[0]) || navigator.language;
+let lang = getStorage('language') || (navigator.languages && navigator.languages[0]) || navigator.language;
+
 intl.init({
   currentLocale: lang.split('-')[0],
   locales: {
