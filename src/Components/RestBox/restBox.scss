@@ -1,10 +1,11 @@
 .rest-box {
+  box-sizing : border-box;
   min-width : 250px;
-  max-width : 250px;
+  max-width : 300px;
   min-height : 440px;
   max-height : 600px;
   padding : 20px;
-  margin-bottom : 91px;
+  margin-bottom : -110px;
   .titleText{
     font-family : PingFangSC-Regular;
     font-size : 30px;
