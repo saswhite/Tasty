@@ -98,7 +98,7 @@ export default function Header () {
 
   /* 历史订单按钮 */
   let renderHistoryBtn = ()=>{
-    if(isLogout && !initUser){
+    if(isLogout && !initUser ){
       return (<button
         className="profile-button log-out"
         onClick={ ()=>{
@@ -106,7 +106,7 @@ export default function Header () {
           history.push('/login');
         } }
         type="button">{get('login.login')}</button>);
-    }else if(initUser) {
+    }else if(initUser && _.has(orderPass,location.pathname)) {
       if(! _.has(orderPass,location.pathname)){
         return (<button className="order-btn"
           onClick={ pushOrder }
@@ -116,6 +116,14 @@ export default function Header () {
       }else {
         return null;
       }
+    }else if (!initUser && (_.has(orderPass,location.pathname))){
+      return (<button
+        className="profile-button log-out"
+        onClick={ ()=>{
+          setIsLogout(true);
+          history.push('/login');
+        } }
+        type="button">{get('login.login')}</button>);
     }
   };
 
