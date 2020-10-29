@@ -8,7 +8,7 @@ import { v4 } from 'uuid';
 
 import moment from 'moment-timezone';
 
-import { init } from '../../Common/Intl';
+import { init,get } from '../../Common/Intl';
 
 /* component */
 import Header from '../../Components/Header/Header';
@@ -16,11 +16,14 @@ import RestBox from '../../Components/RestBox/RestBox';
 
 /* action */
 import { renderRestList,restdata } from './state/reducer';
+import { language } from '../../Redux/Reducer/header';
 
 /* style */
 import './rest.scss';
 
 export default function Restaurant () {
+
+  let lan = useSelector(language);
 
   let dispatch = useDispatch();
 
@@ -30,6 +33,10 @@ export default function Restaurant () {
     init();
     dispatch(renderRestList());
   }, []);
+
+  useEffect( () => {
+    init();
+  }, [ lan ]);
 
   /* 排序 */
   // function restOrder (){
@@ -95,7 +102,7 @@ export default function Restaurant () {
       <Header></Header>
       <div className="restBox-container">
         <div className='rest-tab'>
-          所有餐馆
+          {get('restaurant.allRestaurant')}
           <div className='under'></div>
         </div>
         <div className='restItem'>
