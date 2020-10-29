@@ -1,79 +1,59 @@
-import React ,{ useEffect, useState }from 'react';
+import React ,{ useEffect }from 'react';
 import { useSelector } from 'react-redux';
 import propTypes from 'prop-types';
 import Moment from 'moment';
-// import _ from 'lodash';
-// import { v4 } from 'uuid';
+import _ from 'lodash';
 
 /** 语言 */
 import { language  } from '../../Redux/Reducer/header';
 import{ init } from '../../Common/Intl';
+
+import { getStorage } from '../../Common/utils';
 
 import './orderBox.scss';
 
 export default function OrderBox ({ data }) {
   let lan = useSelector(language);
 
-  let [ cartList,setCartList ] = useState([]);
+  let initLan = getStorage('language');
 
   useEffect(() => {
     init();
   }, [ lan ]);
 
   useEffect(()=>{
-
+    init();
     getCartItemCount();
-    renderCartItem();
-
   },[]);
 
   /** 获取每一个item 的菜单 去重 以及获取每个菜的数量 */
   function getCartItemCount (){
-    let list = new Map();
-    // let array = [];
-    data.cart.forEach(item => {
-
-      // let obj = { name:item.name[`${lan}`],price:item.totalPrice };
-      let obj =  { price:item.totalPrice,count:1 };
-
-      if (!item.name) {
-        //新插入一个菜单，代表这个菜第一次被点
-        list.set(item.name,{ price:item.totalPrice,count:1 });
-
-      } else {
-        //如果菜单已经存在，获取之前计算的次数，然后+1
-        list.set(item.name, { ...obj,count:obj.count + 1 });
+    let cart = data.cart;
+    let array = [];
+    for (let i = 0; i < cart.length; i++){
+      let count = 0;
+      for (let j = 0; j < cart.length; j++) {
+        if(cart[i]._id === cart[j]._id ){
+          count += 1;
+          array[i] = { name:cart[i].name,price:cart[i].price,count:count };
+        }
       }
-    });
-
-    /** 将 Map 转为数组 */
-    console.log(list);
-    setCartList(list);
-
-    // return setCartList([ ...list ]);
-
-  }
-
-  function renderCartItem (){
-    console.log(cartList);
-    cartList.forEach((value,key)=>{
-      console.log('key',key);
-      console.log(value);
-    });
+    }
+    return _.uniqWith(array, _.isEqual);
   }
 
   return (
     <div className='order-box'>
       <div className='order-title'>
         <div className='title-text order-item-name'>
-          { data.restaurant.name[`${lan}`] }
+          { data.restaurant.name[`${initLan}`] }
         </div>
         <div className='sub-title-text'>
           { Moment(data.createdAt).format('YYYY-MM-DD HH:mm:ss') }
         </div>
       </div>
       <div className='order-items'>
-        { renderCartItem() }
+        {/* { renderCartItem() } */}
       </div>
       <div className='order-footer'>
         <div className='order-total container-row container-between'>
