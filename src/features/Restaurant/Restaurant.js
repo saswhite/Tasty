@@ -43,33 +43,23 @@ export default function Restaurant () {
     let checkTime = time.getHours() * 60 + time.getMinutes();
     console.log(checkTime);
     if(list){
-      let sum = 0;
-      let newArr = _.map(list,(item,index)=>{
+      let newArr = _.map(list,(item)=>{
         if(!item.closed){
           _.map(item.hours,(hourItem)=>{
             if(hourItem.dayOfWeek === newYork.day()){
               if(hourItem.start <= checkTime && checkTime <= hourItem.end){
-                console.log('open',index);
                 item = { ...item,closed:false };
-                sum++;
               }
               else{
-                console.log('close',index);
                 item = { ...item,closed:true };
               }
             }
-            // else{
-            //   item = { ...item,closed:true };
-            //   // console.log(item);
-            // }
           });
         }else{
-          console.log('custom',index);
           item = { ...item,closed:true };
         }
         return item;
       });
-      console.log(sum);
       return newArr;
     }
 
@@ -79,12 +69,7 @@ export default function Restaurant () {
 
     let array = isOpen();
     array = _.orderBy(array,[ 'closed', 'featured','zscore' ],[ 'asc','desc','desc' ]);
-
-    // let num = 0;
     let result = _.map(array,(item)=>{
-      // if(item.closed == false){
-      //   return  num++;
-      // }
       return ({
         a:item.closed,
         b:item.featured,
@@ -95,12 +80,12 @@ export default function Restaurant () {
       });
     });
     console.log(result);
-    // console.log(array);
-    return _.map(array,(item=>{
+    return _.map(array,((item,index)=>{
       return (
-        <div key={ v4() }>
+        <div key={ v4() } style={{ paddingTop :(index + 1 ) % 2 === 0 ? '236px' : '' }}>
           <RestBox data={ item } ></RestBox>
         </div>
+
       );
     }));
   };
@@ -108,7 +93,15 @@ export default function Restaurant () {
   return (
     <div>
       <Header></Header>
-      <div className="restBox-container">{renderRestBox()}</div>
+      <div className="restBox-container">
+        <div className='rest-tab'>
+          所有餐馆
+          <div className='under'></div>
+        </div>
+        <div className='restItem'>
+          {renderRestBox()}
+        </div>
+      </div>
     </div>
   );
 }
