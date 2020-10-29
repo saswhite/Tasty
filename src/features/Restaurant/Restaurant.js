@@ -8,6 +8,8 @@ import { v4 } from 'uuid';
 
 import moment from 'moment-timezone';
 
+import { init } from '../../Common/Intl';
+
 /* component */
 import Header from '../../Components/Header/Header';
 import RestBox from '../../Components/RestBox/RestBox';
@@ -25,6 +27,7 @@ export default function Restaurant () {
   let rest = useSelector(restdata);
 
   useEffect( () => {
+    init();
     dispatch(renderRestList());
   }, []);
 
