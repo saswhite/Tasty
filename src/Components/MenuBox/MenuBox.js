@@ -36,8 +36,8 @@ export default function MenuBox ({ title,foods }) {
 
   return (
     <div style={{ marginBottom : '70px' }}>
-      <div className="titleText">{title.name[`${initLan}`]}</div>
-      <div className="foods-container">{renderFoods()}</div>
+      <div className="titleText cursor">{title.name[`${initLan}`]}</div>
+      <div className="foods-container cursor">{renderFoods()}</div>
     </div>
   );
 }
