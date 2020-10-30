@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 /* common */
 import { get,setCh,setEn,init } from '../../Common/Intl';
-import { orderPass,loginPass } from '../../Common/passurl';
+import { loginPass, orderPass } from '../../Common/passurl';
 import { getStorage } from '../../Common/utils';
 
 /* image */
@@ -98,32 +98,46 @@ export default function Header () {
 
   /* 历史订单按钮 */
   let renderHistoryBtn = ()=>{
-    if(isLogout && !initUser ){
-      return (<button
-        className="profile-button log-out"
-        onClick={ ()=>{
-          setIsLogout(true);
-          history.push('/login');
-        } }
-        type="button">{get('login.login')}</button>);
-    }else if(initUser && _.has(orderPass,location.pathname)) {
-      if(! _.has(orderPass,location.pathname)){
-        return (<button className="order-btn"
-          onClick={ pushOrder }
-          type="button">
-          {get('order').title}
-        </button>);
-      }else {
-        return null;
+    if(_.includes(loginPass,location.pathname)){//如果在login页面里面
+      return null;
+    }else{//如果不在login页面里面
+      if(_.includes(orderPass,location.pathname)){//如果在order页面里面
+        if(isLogout){//如果点了登出按钮
+          return (<button
+            className="profile-button log-out"
+            onClick={ ()=>{
+              setIsLogout(true);
+              history.push('/login');
+            } }
+            type="button">{get('login.login')}</button>);
+        }
+      }else {//如果不在order页面里面
+        if(initUser){//如果登陆了
+          if(isLogout) {//如果点了登出按钮
+            return (<button
+              className="profile-button log-out"
+              onClick={ ()=>{
+                setIsLogout(true);
+                history.push('/login');
+              } }
+              type="button">{get('login.login')}</button>);
+          }else {//一般情况下
+            return (<button className="order-btn"
+              onClick={ pushOrder }
+              type="button">
+              {get('order').title}
+            </button>);
+          }
+        }else {//如果没有登陆
+          return (<button
+            className="profile-button log-out"
+            onClick={ ()=>{
+              setIsLogout(true);
+              history.push('/login');
+            } }
+            type="button">{get('login.login')}</button>);
+        }
       }
-    }else if (!initUser && (_.has(orderPass,location.pathname))){
-      return (<button
-        className="profile-button log-out"
-        onClick={ ()=>{
-          setIsLogout(true);
-          history.push('/login');
-        } }
-        type="button">{get('login.login')}</button>);
     }
   };
 
