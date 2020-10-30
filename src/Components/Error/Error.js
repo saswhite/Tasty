@@ -16,7 +16,7 @@ export default function Error () {
   function hideErrorModal (){
     dispatch(hideError());
     if( msg === get(`error.${'auth-failed'}`)){
-      console.log(history);
+      history.push('/login');
     }
   }
   return (

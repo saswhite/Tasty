@@ -22,6 +22,8 @@ import { routerConfig } from './Router/index';
 import _ from 'lodash';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
+import Error from './Components/Error/Error';
+
 function App () {
 
   function renderRouter (){
@@ -37,6 +39,7 @@ function App () {
           {renderRouter()}
         </Switch>
       </div>
+      <Error></Error>
     </Router>
   );
 }

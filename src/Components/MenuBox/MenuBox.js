@@ -17,7 +17,7 @@ import { pushItem ,cart } from './state/reducer';
 
 /* style */
 
-import './menuBox.scss';
+import './menubox.scss';
 
 export default function MenuBox ({ title,foods }) {
 
