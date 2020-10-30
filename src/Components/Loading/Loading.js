@@ -6,6 +6,7 @@ import { selectIsLoading } from '../../Redux/Reducer/loading';
 import './loading.scss';
 /** Assets */
 import loadingLocal from '../../Assets/loading.gif';
+
 export default function Loading () {
 
   const isLoading = useSelector(selectIsLoading);

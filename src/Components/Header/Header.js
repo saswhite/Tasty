@@ -28,7 +28,7 @@ export default function Header () {
   let [ isLogout,setIsLogout ] = useState(false);
 
   let lan = useSelector(language);
-
+  /** 小窗口显示与否 */
   let isShow = useSelector(isClick);
 
   let dispatch = useDispatch();
@@ -42,6 +42,7 @@ export default function Header () {
     renderHistoryBtn();
   }, []);
 
+  /** 点击历史订单 */
   let pushOrder = ()=>{
     dispatch(showLoading());
     setInterval(() => {

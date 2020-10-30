@@ -15,9 +15,11 @@ export const headerSlice = createSlice({
       state.language =  'en-US';
       localStorage.setItem('language','en-US');
     },
+    /** 显示右上角用户小窗口 */
     showProfile: state => {
       state.isClick =  true;
     },
+    /** 关闭小窗口 */
     hideProfile: state => {
       state.isClick =  false;
     },

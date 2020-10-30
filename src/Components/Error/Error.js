@@ -29,7 +29,7 @@ export default function Error () {
         <div className='error-container'>
           <div className='error-modal-box containerCol space-between vertical'>
             <div>{ msg }</div>
-            <button className='normal-btn' onClick={  hideErrorModal }>关闭</button>
+            <button className='normal-btn' onClick={  hideErrorModal }>{ get('close') }</button>
           </div>
         </div>
       </div> : null

@@ -17,7 +17,7 @@ import { pushItem ,cart } from './state/reducer';
 
 /* style */
 
-import './menubox.scss';
+import './menuBox.scss';
 
 export default function MenuBox ({ title,foods }) {
 
@@ -31,9 +31,12 @@ export default function MenuBox ({ title,foods }) {
     renderFoods();
   }, [ cartArray ]);
 
+  /** 渲染菜品前的数量圆圈 */
   let renderCircle = (item)=>{
     let count = 0;
+    /** 从localstorage 里获取 购物车里的菜品信息 */
     let cartList =  getStorage('cart');
+    /** 用groupBy 返回一个Map 对象 ，value.length 即为菜品数量 */
     let orderCart =  _.groupBy(cartList,`name[${initLan}]`);
     _.forIn(orderCart,(value,key)=>{
       if(item.name[`${initLan}`] === key){
@@ -49,7 +52,10 @@ export default function MenuBox ({ title,foods }) {
     }
   };
 
+  /** 渲染菜品 */
   let renderFoods = ()=>{
+
+    /** 根据每个菜品的种类进行分类 */
     return _.map(_.groupBy(foods,`category.${'_id'}`)[title._id],(item)=>{
 
       if(item.category._id === title._id){
@@ -60,6 +66,7 @@ export default function MenuBox ({ title,foods }) {
             key={ v4() }
             className='menu-box-item'
             onClick={ ()=>{
+              /** 如果这个菜品没有售罄 ，添加至vuex 并存入localstorage */
               if(item.available) {
                 dispatch(pushItem(item));
               }
