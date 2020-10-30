@@ -66,6 +66,9 @@ export default function OrderBox ({ data }) {
     }
     /** 返回一个经过去重 和算过数量的数组 */
     return _.uniqWith(array, _.isEqual);
+
+    // console.log(_.groupBy(cart,`name[${initLan}]`));
+    // return (_.groupBy(cart,`name[${initLan}]`));
   }
 
   /**  渲染中间菜品 */
