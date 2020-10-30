@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { showErrorAsync } from '../../../Redux/Reducer/error';
 import { hideLoading, showLoading } from '../../../Redux/Reducer/loading';
 import { getOrder } from '../../../Request/order';
-// import { getStorage } from '../../../Common/utils';
+import { getStorage } from '../../../Common/utils';
 
 export const orderSlice = createSlice({
   name: 'order',
@@ -23,8 +23,8 @@ export const getOrderList = ()=>{
   return async (dispatch)=>{
     try {
       dispatch(showLoading);
-      // let id = getStorage('user')._id;
-      const data = await getOrder();
+      let id = getStorage('user')._id;
+      const data = await getOrder(id);
 
       dispatch(updateList(data.list));
 

@@ -8,7 +8,7 @@ import * as serviceWorker from './serviceWorker';
 
 /**  components */
 import Loading from './Components/Loading/Loading';
-import Error from './Components/Error/Error';
+// import Error from './Components/Error/Error';
 import Modal from './Components/Modal/Modal';
 
 ReactDOM.render(
@@ -16,7 +16,6 @@ ReactDOM.render(
   <Provider store={ store }>
     <App />
     <Loading/>
-    <Error/>
     <Modal/>
   </Provider>,
   // </React.StrictMode>,

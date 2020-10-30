@@ -1,13 +1,19 @@
 import React from 'react';
-import './App.css';
-import PrivateRouter from './Common/PrivateRouter';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import _ from 'lodash';
 
+import PrivateRouter from './Common/PrivateRouter';
+import { routerConfig } from './Router/index';
 import { getStorage } from './Common/utils';
 
 import intl from 'react-intl-universal';
 import zh from './Locales/zh-CN.json';
 import en from './Locales/en-US.json';
 
+/** components */
+import Error from './Components/Error/Error';
+/** scss */
+import './App.css';
 let lang = getStorage('language') || (navigator.languages && navigator.languages[0]) || navigator.language;
 
 intl.init({
@@ -17,10 +23,6 @@ intl.init({
     en
   }
 });
-
-import { routerConfig } from './Router/index';
-import _ from 'lodash';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 function App () {
 
@@ -37,6 +39,7 @@ function App () {
           {renderRouter()}
         </Switch>
       </div>
+      <Error/>
     </Router>
   );
 }
