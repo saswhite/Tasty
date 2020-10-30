@@ -31,7 +31,7 @@ export default function MenuBox ({ title,foods }) {
 
     return _.map(_.groupBy(foods,`category.${'_id'}`)[title._id],(item)=>{
 
-      console.log(item);
+      // console.log(item);
 
       if(item.category._id === title._id){
 

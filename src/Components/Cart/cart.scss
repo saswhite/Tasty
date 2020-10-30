@@ -2,9 +2,8 @@
 
 .cart-container{
   position : fixed;
-  right : 100px;
-  bottom : 50px;
-  // width : 922px;
+  right : 50px;
+  bottom : 30px;
   .cart-close{
     .close-btn{
       display : flex;
@@ -19,18 +18,19 @@
     }
   }
   .cart-expand{
+    box-sizing : border-box; 
     padding : 15px 0 20px;
     background-color : #fff !important;
     box-shadow : 0 2px 8px 0 hsla(0,0%,57.3%,.5);
-
+    transition :height 1s linear,width 0.3s ease  ;
     .cart-pay{
-      align-items : center;
-      width : 450px;
+      align-items : center; 
       height : 100%;
-      padding : 0 20px;
+      // padding : 0 20px;
       overflow-y : hidden;
       border-right : 2px solid #ccc;
       box-shadow : none;
+      transition : width 0.3s ease;
       img{
         width : 200px;
         height : 200px;
@@ -72,9 +72,7 @@
                 height : 30px;
               }
             }
-
           }
-
           .payment:hover{
             background-color :rgba(175, 175, 175,0.3);
           }
@@ -82,12 +80,38 @@
       }
     }
     .cart-details{
-      justify-content : space-between;
+      justify-content : center;
       width : 320px;
+      min-height : 50px;
       padding : 0 20px;
       box-shadow : none;
-      transition : all .3s linear;
+      transition : height 1s linear;
+      .details-main{
+        width : 280px;
+        text-align : center;
+        .chooseCart{
+          height : 16px;
+          margin-bottom : 20px;
+          font-family : PingFangSC;
+          font-size : 16px;
+          font-style : normal;
+          font-weight : 400;
+          font-stretch : normal;
+          line-height : 16px;
+          color : #afafaf;
+          text-align : center;
+          letter-spacing : normal;
+        }
+      }
       .details-ft{
+        .total-price{
+          padding-top : 10px;
+          padding-bottom : 15px;
+          font-size : 24px;
+          line-height : 1.5;
+          color : #202020;
+          border-top : 1px solid #ccc;
+        }
         button{
           width : 100%;
           height : 40px;
@@ -101,6 +125,9 @@
           border : 0;
           border-radius : 25px;
           transition : all .3s linear;
+        }
+        button:hover{
+          background-color :  #0d9e65 !important;
         }
       }
     }
