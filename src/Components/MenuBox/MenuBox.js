@@ -55,7 +55,7 @@ export default function MenuBox ({ title,foods }) {
 
   return (
 
-    <div style={{ marginBottom : '70px' }}>
+    <div style={{ marginBottom : '70px',breakInside :'avoid' }}>
 
       <div className="titleText cursor">{title.name[`${initLan}`]}</div>
 
