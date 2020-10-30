@@ -11,7 +11,7 @@ import { getStorage } from '../../Common/utils';
 
 /* style */
 
-import './menuBox.scss';
+import './menubox.scss';
 
 export default function MenuBox ({ title,foods }) {
 
@@ -44,7 +44,6 @@ export default function MenuBox ({ title,foods }) {
             <div>${(item.price / 100).toFixed(2)}</div>
 
           </div>
-
         );
 
       }
