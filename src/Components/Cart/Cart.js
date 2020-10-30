@@ -18,6 +18,8 @@ export default function Cart () {
   const [ isShow,setIsShow ] = useState(false);
   const [ isExpand,setIsExpand ] = useState(false);
 
+  // const [ totalPrice ] = useState(0.00);
+
   const array = useSelector(state => state.count.array);
 
   function setPayment (img,value){
@@ -31,6 +33,29 @@ export default function Cart () {
         <CartBox item={ item }   key={ Math.random() }></CartBox>
       );
     });
+  };
+
+  let renderTotal = ()=>{
+
+    let list = [];
+    _.forIn(_.groupBy(array,`name[${initLan}]`),(value,key)=>{
+      let item = {
+        title:'',
+        count : 0,
+        price: 0
+      };
+      item.title = key.toString();
+      item.count = value.length;
+      item.price = value[0].price;
+      list.push(item);
+    });
+    let total =  _.reduce(list, (sum, item)=> {
+      return sum + item.count * (item.price / 100).toFixed(2);
+    }, 0);
+
+    console.log('total===>',total);
+
+    return total.toFixed(2);
   };
 
   /* 测试 */
@@ -50,12 +75,18 @@ export default function Cart () {
         item.price = value[0].price;
         list.push(item);
       });
-      console.log(list);
+      let total =  _.reduce(list, (sum, item)=> {
+        return sum + item.count * (item.price / 100).toFixed(2);
+      }, 0);
+
+      console.log(total);
+
       return renderCartList(list);
     }else{
       return <div className='chooseCart'>选择加入购物车</div>;
     }
   }
+
   return (
     <div className='cart-container container-row' style={{ maxHeight :'707px' }}>
       {isExpand ?
@@ -104,10 +135,10 @@ export default function Cart () {
             {isExpand ?
               <div className='total-price container-between'>
                 <span>总价</span>
-                <span>$999</span>
+                <span>{`$ ${renderTotal()}`}</span>
               </div> : null}
             <button onClick={ ()=>{setIsExpand(true);} } style={{ backgroundColor :!isExpand ? 'black ' : ' #0d9e65 ' }}>
-              {!isExpand ? '$999' : '确认下单'}
+              {!isExpand ? `$ ${renderTotal()}` : '确认下单'}
             </button>
           </div>
         </div>

@@ -34,9 +34,9 @@ export default function MenuBox ({ title,foods }) {
   let renderCircle = (item)=>{
     let count = 0;
     let cartList =  getStorage('cart');
-    let orderCart =  _.groupBy(cartList,`name[${initLan}]`);
+    let orderCart =  _.groupBy(cartList,`category.${'_id'}`);
     _.forIn(orderCart,(value,key)=>{
-      if(item.name[`${initLan}`] === key){
+      if(item.category._id === key){
         count = value.length;
       }
     });
