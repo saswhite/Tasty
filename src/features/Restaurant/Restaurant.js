@@ -43,7 +43,7 @@ export default function Restaurant () {
     let list = rest.list;
     let date = new Date();
     var newYork = moment.tz(date,'America/New_York');
-    const time = new Date(newYork._d);
+    const time = new Date(newYork);
     let checkTime = time.getHours() * 60 + time.getMinutes();
 
     if(list){

@@ -64,7 +64,6 @@ export default function OrderBox ({ data }) {
         }
       }
     }
-
     /** 返回一个经过去重 和算过数量的数组 */
     return _.uniqWith(array, _.isEqual);
 
