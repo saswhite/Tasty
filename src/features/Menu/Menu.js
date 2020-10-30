@@ -12,6 +12,7 @@ import { get } from '../../Common/Intl';
 
 /* component */
 import Header from '../../Components/Header/Header';
+import Cart from '../../Components/Cart/Cart';
 
 /* style */
 import './menu.scss';
@@ -53,6 +54,7 @@ export default function Menu () {
         <div className="subTitleText">{get(`tags.${restInfo.tags[0]}`)}</div>
         <div className="menu-box-container">{rederMenuBox()}</div>
       </div>
+      <Cart></Cart>
     </div>
   );
 }
