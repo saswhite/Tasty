@@ -60,12 +60,14 @@ export default function MenuBox ({ title,foods }) {
             key={ v4() }
             className='menu-box-item'
             onClick={ ()=>{
-              dispatch(pushItem(item));
+              if(item.available) {
+                dispatch(pushItem(item));
+              }
             } }>
 
             {renderCircle(item)}
 
-            <div >{item.name[`${initLan}`]}</div>
+            <div style={ item.available ?  {} : { opacity: '0.2' } }>{item.name[`${initLan}`]}</div>
 
             <div>${(item.price / 100).toFixed(2)}</div>
 
