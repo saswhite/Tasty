@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 import { v4 } from 'uuid';
 
+import { init,get } from '../../Common/Intl';
+
 /* component */
 import Header from '../../Components/Header/Header';
 import OrderBox from '../../Components/OrderBox/OrderBox';
 
 /** actions */
-
+import { language } from '../../Redux/Reducer/header';
 import { getOrderList ,orderList } from './state/reducer';
 
 /** scss */
@@ -16,22 +18,27 @@ import './order.scss';
 
 export default function Order () {
 
-  console.log(1);
+  let lan = useSelector(language);
 
   const dispatch = useDispatch();
   const list = useSelector(orderList);
 
   useEffect(() => {
-
+    init();
     dispatch(getOrderList());
 
   }, []);
+
+  useEffect(() => {
+    init();
+  }, [ lan ]);
+
   /** 渲染右侧历史订单列表 */
   function renderOrderList (){
-    return _.map(list,(item)=>{
+    return _.map(list,(item,index)=>{
       return (
-        <div key={ v4() }>
-          <OrderBox data={ item }></OrderBox>
+        <div key={ v4() } className='container-row-center'>
+          <OrderBox data={ item } index={ index }></OrderBox>
         </div>
       );
     });
@@ -42,7 +49,7 @@ export default function Order () {
       <Header></Header>
       <div className='content-box'>
         <div className='order-tab'>
-          <div>历史订单</div>
+          <div>{get( `order.${'title'}`)}</div>
           <div className='rectangle'></div>
         </div>
         <div className='order-list'>

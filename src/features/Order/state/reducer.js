@@ -25,7 +25,6 @@ export const getOrderList = ()=>{
       dispatch(showLoading);
 
       const data = await getOrder();
-      console.log(data.list);
 
       dispatch(updateList(data.list));
 

@@ -10,7 +10,7 @@
       display : flex;
       flex-direction : column;
       margin-right : 10px;
-      background-color : transparent !important;
+      background-color : #fff !important;
       border : 0;
       img{
         max-width : 56.3px;
@@ -20,7 +20,9 @@
   }
   .cart-expand{
     padding : 15px 0 20px;
+    background-color : #fff !important;
     box-shadow : 0 2px 8px 0 hsla(0,0%,57.3%,.5);
+
     .cart-pay{
       align-items : center;
       width : 450px;

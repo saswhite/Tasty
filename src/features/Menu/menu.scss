@@ -1,3 +1,36 @@
-.top {
-  margin-top : 100px;
+@import '../../Style/public.scss';
+
+.menu {
+    position : relative;
+    margin-top : 200px;
+    margin-bottom : 50px;
+    margin-left : 100px;
+    .titleText{
+      font-family : PingFangSC-Regular;
+      font-size : 30px;
+      font-style : normal;
+      font-weight : 600;
+      font-stretch : normal;
+      color : #202020;
+      letter-spacing : normal;
+      cursor : pointer;
+    }
+    .subTitleText{
+      width : 220px;
+      height : 24px;
+      font-family : PingFangSC-Regular;
+      font-size : 16px;
+      font-style : normal;
+      font-weight : 400;
+      font-stretch : normal;
+      line-height : 1.5;
+      color : #797979;
+      letter-spacing : normal;
+    }
+    .menu-box-container {
+      grid-auto-flow : row dense;
+      width : 60%;
+      margin-top : 70px;
+      column-count : 2;
+    }
 }

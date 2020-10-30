@@ -84,7 +84,8 @@ export default function Header () {
         <div className="language-button">
           <button
             onClick={ async ()=>{await setCh(); dispatch(showZh());} }
-            id={ lan === 'zh-CN' || initLan === 'zh-CN' ? 'on-choose' : '' } type="button">中</button>
+            id={ lan === 'zh-CN' || initLan === 'zh-CN' ? 'on-choose' : '' }
+            type="button">中</button>
           <button onClick={ async ()=>{await setEn(); dispatch(showEn());}  }
             id={ lan === 'en-US' || initLan === 'en-US' ? 'on-choose' : '' } type="button">En</button>
         </div>
@@ -97,7 +98,7 @@ export default function Header () {
 
   /* 历史订单按钮 */
   let renderHistoryBtn = ()=>{
-    if(isLogout && !initUser){
+    if(isLogout && !initUser ){
       return (<button
         className="profile-button log-out"
         onClick={ ()=>{
@@ -105,7 +106,7 @@ export default function Header () {
           history.push('/login');
         } }
         type="button">{get('login.login')}</button>);
-    }else if(initUser) {
+    }else if(initUser && _.has(orderPass,location.pathname)) {
       if(! _.has(orderPass,location.pathname)){
         return (<button className="order-btn"
           onClick={ pushOrder }
@@ -115,6 +116,14 @@ export default function Header () {
       }else {
         return null;
       }
+    }else if (!initUser && (_.has(orderPass,location.pathname))){
+      return (<button
+        className="profile-button log-out"
+        onClick={ ()=>{
+          setIsLogout(true);
+          history.push('/login');
+        } }
+        type="button">{get('login.login')}</button>);
     }
   };
 
@@ -151,7 +160,7 @@ export default function Header () {
   return (
     <div className="header">
       <div className="container-between vertical left">
-        <img src={ logo } alt="" className="logo"/>
+        <img src={ logo } alt="" className="logo" onClick={ ()=>{history.push('/restaurant');} }/>
       </div>
       <div>
         <img

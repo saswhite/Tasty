@@ -6,7 +6,7 @@ import alipay from '../../Assets/alipay_big.png';
 import wechat from '../../Assets/wechat_big.png';
 import apple from '../../Assets/applepay.png';
 import { setStorage } from '../../Common/utils';
-import MenuBox from '../MenuBox/MenuBox';
+import CartBox from '../CartBox/CartBox';
 import _ from 'lodash';
 
 export default function Cart () {
@@ -30,9 +30,9 @@ export default function Cart () {
       { name:'玉米',price:15,count:1 },
     ];
     return _.map(arr,(item)=>{
-      // console.log(item);
+      console.log(item);
       return (
-        <MenuBox item={ item } key={ Math.random() }></MenuBox>
+        <CartBox item={ item } key={ Math.random() }></CartBox>
       );
     });
   }

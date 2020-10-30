@@ -17,7 +17,7 @@ export const routerConfig = [
     component:Restaurant
   },
   {
-    path:'/menu',
+    path:'/menu/:id',
     component:Menu
   },
   {
