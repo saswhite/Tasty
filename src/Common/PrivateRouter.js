@@ -11,11 +11,10 @@ export default function PrivateRouter ({ component: Component , ...rest }) {
   }
   let user = getStorage('user');
   if(!user){
-    // auth = true;
-    // if(rest.path === '/order'){
+    if(rest.path === '/order'){
 
-    //   auth = false;
-    // }
+      auth = false;
+    }
   }else{
     if(rest.path === '/login'){
       auth = false;

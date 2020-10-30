@@ -35,15 +35,23 @@ export default function Menu () {
 
   useEffect(() => {
     dispatch(sendRequestMenu(params.id));
-    console.log(menuList);
   }, []);
 
   let rederMenuBox = ()=>{
-    return _.map(menuList['categories'],(item)=>{
+
+    if(menuList['foods'].length !== 0) {
+      console.log(menuList['foods'].length);
+      return _.map(menuList['categories'],(item)=>{
+        return (
+          <MenuBox title={ item } foods={ menuList['foods'] } key={ v4() }></MenuBox>
+        );
+      });
+    }else {
+
       return (
-        <MenuBox title={ item } foods={ menuList['foods'] } key={ v4() }></MenuBox>
+        <div>{get(`menu.${'no-menu'}`)}</div>
       );
-    });
+    }
   };
 
   return (

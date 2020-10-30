@@ -50,6 +50,7 @@ export default function MenuBox ({ title,foods }) {
   };
 
   let renderFoods = ()=>{
+    console.log(foods);
     return _.map(_.groupBy(foods,`category.${'_id'}`)[title._id],(item)=>{
 
       if(item.category._id === title._id){
@@ -67,9 +68,11 @@ export default function MenuBox ({ title,foods }) {
 
             {renderCircle(item)}
 
-            <div style={ item.available ?  {} : { opacity: '0.2' } }>{item.name[`${initLan}`]}</div>
+            <div style={ item.available ?  {} : { opacity: '0.2' } }>
+              {item.name[`${initLan}`]}
+            </div>
 
-            <div>${(item.price / 100).toFixed(2)}</div>
+            <div style={ item.available ?  {} : { opacity: '0.2' } }>${(item.price / 100).toFixed(2)}</div>
 
           </div>
         );
@@ -84,8 +87,12 @@ export default function MenuBox ({ title,foods }) {
 
     <div style={{ marginBottom : '70px',breakInside :'avoid' }}>
 
-      <div className="titleText cursor">{title.name[`${initLan}`]}</div>
-
+      <div>
+        <div className="titleText cursor">
+          {title.name[`${initLan}`]}
+        </div>
+        <div className="rect"></div>
+      </div>
       <div className="foods-container cursor">
         {renderFoods()}
       </div>
