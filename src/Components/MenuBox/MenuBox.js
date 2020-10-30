@@ -50,7 +50,6 @@ export default function MenuBox ({ title,foods }) {
   };
 
   let renderFoods = ()=>{
-    console.log(foods);
     return _.map(_.groupBy(foods,`category.${'_id'}`)[title._id],(item)=>{
 
       if(item.category._id === title._id){
