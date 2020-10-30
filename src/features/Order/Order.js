@@ -50,7 +50,7 @@ export default function Order () {
       <div className='content-box'>
         <div className='order-tab'>
           <div>{get( `order.${'title'}`)}</div>
-          <div className='rectangle'></div>
+          <div className='rect-tangle'></div>
         </div>
         <div className='order-list'>
           { renderOrderList() }
