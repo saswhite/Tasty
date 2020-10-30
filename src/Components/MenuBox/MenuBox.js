@@ -11,7 +11,7 @@ import { getStorage } from '../../Common/utils';
 
 /* style */
 
-import './menuBox.scss';
+import './menubox.scss';
 
 export default function MenuBox ({ title,foods }) {
 
@@ -44,7 +44,6 @@ export default function MenuBox ({ title,foods }) {
             <div>${(item.price / 100).toFixed(2)}</div>
 
           </div>
-
         );
 
       }
@@ -55,7 +54,7 @@ export default function MenuBox ({ title,foods }) {
 
   return (
 
-    <div style={{ marginBottom : '70px' }}>
+    <div style={{ marginBottom : '70px',breakInside :'avoid' }}>
 
       <div className="titleText cursor">{title.name[`${initLan}`]}</div>
 
