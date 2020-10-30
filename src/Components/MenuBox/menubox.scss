@@ -1,0 +1,65 @@
+@import '../../Style/public.scss';
+
+.cart-item{
+  margin-bottom : 23px;
+  .dinner-name{
+    font-size : 16px;
+    font-style : normal;
+    font-weight : 400;
+    font-stretch : normal;
+    line-height : 30px;
+    color : #202020;
+    letter-spacing : normal;
+  }
+  .dinner-control{
+    .dinner-price{
+      height : 30px;
+      margin-right : 5px;
+      font-size : 16px;
+      font-style : normal;
+      font-weight : 400;
+      font-stretch : normal;
+      line-height : 30px;
+      color : #202020;
+      letter-spacing : normal;
+    }
+    .count-box{
+      button{
+        width : 29px;
+        height : 30px;
+        font-family : PingFangSC-Regular;
+        font-size : 14px;
+        line-height : 30px;
+        color : #fff;
+        background-color : #202020;
+      }
+      .remove-btn{
+        padding : 0;
+        border : 0;
+        border-top-left-radius : 15px;
+        border-top-right-radius : 0;
+        border-bottom-right-radius : 0;
+        border-bottom-left-radius : 15px;
+      }
+      .add-btn{
+        padding : 0 0 0 10px;
+        text-align : left;
+        border : 0;
+        border-top-left-radius : 0;
+        border-top-right-radius : 15px;
+        border-bottom-right-radius : 15px;
+        border-bottom-left-radius : 0;
+      }
+      span{
+        width : 24px;
+        height : 30px;
+        font-family : PingFangSC-Regular;
+        line-height : 30px;
+        color : #fff;
+        text-align : center;
+        background-color : #202020;
+      }
+    }
+  }
+}
+
