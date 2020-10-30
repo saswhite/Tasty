@@ -39,7 +39,7 @@ export default function MenuBox ({ title,foods }) {
     /** 用groupBy 返回一个Map 对象 ，value.length 即为菜品数量 */
     let orderCart =  _.groupBy(cartList,`name[${initLan}]`);
     _.forIn(orderCart,(value,key)=>{
-      if(item.name[`${initLan}`] === key){
+      if(item.category._id === key){
         count = value.length;
       }
     });
