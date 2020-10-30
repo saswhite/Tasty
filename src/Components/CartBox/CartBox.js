@@ -1,14 +1,14 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import './cartBox.scss';
-import { getStorage } from '../../Common/utils';
+// import { getStorage } from '../../Common/utils';
 
-export default function MenuBox ( { item } ) {
+export default function MenuBox ( { item,count } ) {
 
-  let initLan = getStorage('language');
+  console.log(count);
   return (
     <div className='container-between cart-item'>
-      <div className='dinner-name'>{item.name[`${initLan}`] }</div>
+      <div className='dinner-name'>{item.title }</div>
       <div className='dinner-control container-row' >
         <div className='dinner-price'>${(item.price / 100).toFixed(2)}</div>
         <div className='count-box container-row'>
@@ -21,5 +21,6 @@ export default function MenuBox ( { item } ) {
   );
 }
 MenuBox.propTypes = {
-  item:propTypes.object
+  item:propTypes.object,
+  count: propTypes.number
 };

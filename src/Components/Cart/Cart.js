@@ -6,11 +6,14 @@ import logo from '../../Assets/logo.png';
 import alipay from '../../Assets/alipay_big.png';
 import wechat from '../../Assets/wechat_big.png';
 import apple from '../../Assets/applepay.png';
-import { setStorage } from '../../Common/utils';
+import { setStorage,getStorage } from '../../Common/utils';
 import CartBox from '../CartBox/CartBox';
 import _ from 'lodash';
 
 export default function Cart () {
+
+  let initLan = getStorage('language');
+
   const [ choice,setChoice ] = useState();
   const [ isShow,setIsShow ] = useState(false);
   const [ isExpand,setIsExpand ] = useState(false);
@@ -22,15 +25,33 @@ export default function Cart () {
     setStorage('payment',String(value));
   }
 
+  let renderCartList = (list)=>{
+    return _.map(list,(item)=>{
+      return (
+        <CartBox item={ item }   key={ Math.random() }></CartBox>
+      );
+    });
+  };
+
   /* 测试 */
   function renderMenu (){
+
     if(array.length > 0){
 
-      return _.map(array,(item)=>{
-        return (
-          <CartBox item={ item } key={ Math.random() }></CartBox>
-        );
+      let list = [];
+      _.forIn(_.groupBy(array,`name[${initLan}]`),(value,key)=>{
+        let item = {
+          title:'',
+          count : 0,
+          price: 0
+        };
+        item.title = key.toString();
+        item.count = value.length;
+        item.price = value[0].price;
+        list.push(item);
       });
+      console.log(list);
+      return renderCartList(list);
     }else{
       return <div className='chooseCart'>选择加入购物车</div>;
     }

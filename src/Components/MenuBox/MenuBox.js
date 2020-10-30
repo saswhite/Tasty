@@ -17,7 +17,7 @@ import { pushItem ,cart } from './state/reducer';
 
 /* style */
 
-import './menuBox.scss';
+import './menubox.scss';
 
 export default function MenuBox ({ title,foods }) {
 
@@ -60,14 +60,18 @@ export default function MenuBox ({ title,foods }) {
             key={ v4() }
             className='menu-box-item'
             onClick={ ()=>{
-              dispatch(pushItem(item));
+              if(item.available) {
+                dispatch(pushItem(item));
+              }
             } }>
 
             {renderCircle(item)}
 
-            <div >{item.name[`${initLan}`]}</div>
+            <div style={ item.available ?  {} : { opacity: '0.2' } }>
+              {item.name[`${initLan}`]}
+            </div>
 
-            <div>${(item.price / 100).toFixed(2)}</div>
+            <div style={ item.available ?  {} : { opacity: '0.2' } }>${(item.price / 100).toFixed(2)}</div>
 
           </div>
         );
@@ -82,8 +86,12 @@ export default function MenuBox ({ title,foods }) {
 
     <div style={{ marginBottom : '70px',breakInside :'avoid' }}>
 
-      <div className="titleText cursor">{title.name[`${initLan}`]}</div>
-
+      <div>
+        <div className="titleText cursor">
+          {title.name[`${initLan}`]}
+        </div>
+        <div className="rect"></div>
+      </div>
       <div className="foods-container cursor">
         {renderFoods()}
       </div>
