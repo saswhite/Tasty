@@ -88,10 +88,12 @@
       transition : height 1s linear;
       .details-main{
         width : 280px;
+        overflow : auto;
         text-align : center;
+
         .chooseCart{
           height : 16px;
-          margin-bottom : 20px;
+          margin-bottom : 16px;
           font-family : PingFangSC;
           font-size : 16px;
           font-style : normal;

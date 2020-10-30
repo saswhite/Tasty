@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import './cart.scss';
 import closeImg from '../../Assets/close_btn.png';
 import logo from '../../Assets/logo.png';
@@ -14,6 +15,8 @@ export default function Cart () {
   const [ isShow,setIsShow ] = useState(false);
   const [ isExpand,setIsExpand ] = useState(false);
 
+  const array = useSelector(state => state.count.array);
+
   function setPayment (img,value){
     setChoice(img);
     setStorage('payment',String(value));
@@ -21,17 +24,9 @@ export default function Cart () {
 
   /* 测试 */
   function renderMenu (){
-    var arr = [
-      { name:'白菜段',price:20,count:1 },
-      { name:'玉米',price:15,count:1 },
-      { name:'玉米',price:15,count:1 },
-      { name:'玉米',price:15,count:1 },
-      { name:'玉米',price:15,count:1 },
-      { name:'玉米',price:15,count:1 },
-    ];
-    if(arr.length > 0){
+    if(array.length > 0){
 
-      return _.map(arr,(item)=>{
+      return _.map(array,(item)=>{
         return (
           <CartBox item={ item } key={ Math.random() }></CartBox>
         );
