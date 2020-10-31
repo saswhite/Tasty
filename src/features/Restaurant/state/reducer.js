@@ -18,7 +18,7 @@ export const restSlice = createSlice({
 });
 
 export const { renderRest } = restSlice.actions;
-
+/** 请求 restaurant 列表 */
 export const renderRestList = ()=>{
   return async dispatch => {
     try {
@@ -28,6 +28,7 @@ export const renderRestList = ()=>{
 
     } catch (err) {
       dispatch(showErrorAsync(err.message));
+
     } finally{
       dispatch(hideLoading());
 
