@@ -11,6 +11,7 @@ import { checkOrder } from './state/action';
 import CartBox from '../CartBox/CartBox';
 import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
+import { clear } from '../MenuBox/state/reducer';
 
 export default function Cart () {
 
@@ -29,14 +30,21 @@ export default function Cart () {
 
   useEffect(()=>{
     let payment = getStorage('payment');
+    let checkRest = getStorage('restaurant');
     if(payment){
-
       if (payment === 'alipay'){
         setChoice(alipay);
       }else if(payment == 'wechat'){
         setChoice(wechat);
       }else{
         setChoice(apple);
+      }
+    }
+    if(checkRest){
+      if(array.length > 0){
+        if(array[0].restaurant._id !== checkRest._id){
+          dispatch(clear());
+        }
       }
     }
 
