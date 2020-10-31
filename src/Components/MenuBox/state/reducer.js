@@ -19,6 +19,10 @@ export const countSlice = createSlice({
       state.array = [ ...state.array,action.payload ];
       setStorage('cart',state.array);
       console.log(state.array);
+    },
+    clear:(state)=>{
+      state.array = [];
+      setStorage('cart',[]);
     }
   },
 });
@@ -30,7 +34,7 @@ export const pushItem = (item)=>{
   };
 };
 
-export const { add, remove,push } = countSlice.actions;
+export const { add, remove,push,clear } = countSlice.actions;
 
 export const ControlCount = state => state.count.value;
 

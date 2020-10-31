@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector ,useDispatch } from 'react-redux';
 import './cart.scss';
 import closeImg from '../../Assets/close_btn.png';
 import logo from '../../Assets/logo.png';
@@ -7,8 +7,10 @@ import alipay from '../../Assets/alipay_big.png';
 import wechat from '../../Assets/wechat_big.png';
 import apple from '../../Assets/applepay.png';
 import { setStorage,getStorage } from '../../Common/utils';
+import { checkOrder } from './state/action';
 import CartBox from '../CartBox/CartBox';
 import _ from 'lodash';
+import { useHistory } from 'react-router-dom';
 
 export default function Cart () {
 
@@ -18,9 +20,27 @@ export default function Cart () {
   const [ isShow,setIsShow ] = useState(false);
   const [ isExpand,setIsExpand ] = useState(false);
 
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   // const [ totalPrice ] = useState(0.00);
 
   const array = useSelector(state => state.count.array);
+
+  useEffect(()=>{
+    let payment = getStorage('payment');
+    if(payment){
+
+      if (payment === 'alipay'){
+        setChoice(alipay);
+      }else if(payment == 'wechat'){
+        setChoice(wechat);
+      }else{
+        setChoice(apple);
+      }
+    }
+
+  },[]);
 
   function setPayment (img,value){
     setChoice(img);
@@ -87,6 +107,17 @@ export default function Cart () {
     }
   }
 
+  function orderClick (){
+    let orderInfo = {
+      payment:getStorage('payment') || '',
+      cart:array,
+      userId:getStorage('user') ? getStorage('user')._id : '',	// 用户id
+      restaurantId:getStorage('restaurant')._id  // 餐馆id
+    };
+    // console.log(orderInfo);
+    dispatch(checkOrder(orderInfo,history));
+  }
+
   return (
     <div className='cart-container container-row' style={{ maxHeight :'707px' }}>
       {isExpand ?
@@ -137,9 +168,18 @@ export default function Cart () {
                 <span>总价</span>
                 <span>{`$ ${renderTotal()}`}</span>
               </div> : null}
-            <button onClick={ ()=>{setIsExpand(true);} } style={{ backgroundColor :!isExpand ? 'black ' : ' #0d9e65 ' }}>
+            {/* <button onClick={ orderClick } style={{ backgroundColor :!isExpand ? 'black ' : ' #0d9e65 ' }}>
               {!isExpand ? `$ ${renderTotal()}` : '确认下单'}
-            </button>
+            </button> */}
+
+            {isExpand ?
+              <button onClick={ orderClick } style={{ backgroundColor :!isExpand ? 'black ' : ' #0d9e65 ' }}>
+                确认下单
+              </button> :
+              <button onClick={ ()=>{setIsExpand(true);} } style={{ backgroundColor :!isExpand ? 'black ' : ' #0d9e65 ' }}>
+              ${renderTotal()}
+              </button>
+            }
           </div>
         </div>
       </div>

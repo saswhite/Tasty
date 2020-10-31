@@ -16,8 +16,7 @@ import { getStorage } from '../../Common/utils';
 import { pushItem ,cart } from './state/reducer';
 
 /* style */
-
-import './menuBox.scss';
+import './menubox.scss';
 
 export default function MenuBox ({ title,foods }) {
 
@@ -37,12 +36,13 @@ export default function MenuBox ({ title,foods }) {
     /** 从localstorage 里获取 购物车里的菜品信息 */
     let cartList =  getStorage('cart');
     /** 用groupBy 返回一个Map 对象 ，value.length 即为菜品数量 */
-    let orderCart =  _.groupBy(cartList,`name[${initLan}]`);
+    let orderCart =  _.groupBy(cartList,'_id');
     _.forIn(orderCart,(value,key)=>{
-      if(item.category._id === key){
+      if(item._id === key){
         count = value.length;
       }
     });
+    console.log(count);
     if(count === 0){
       return null;
     }else {
