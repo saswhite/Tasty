@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { showErrorAsync } from '../../../Redux/Reducer/error';
 import { hideLoading, showLoading } from '../../../Redux/Reducer/loading';
-import { getOrder } from '../../../Request/order';
+
 import { getStorage } from '../../../Common/utils';
+/** request */
+import { getOrder } from '../../../Request/order';
 
 export const orderSlice = createSlice({
   name: 'order',

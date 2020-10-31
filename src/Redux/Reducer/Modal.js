@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { showLoading,hideLoading } from './loading';
 import { showErrorAsync } from './error';
-import { regist } from '../../Request/regist';
 import intl from 'react-intl-universal';
+/** request */
+import { regist } from '../../Request/regist';
 
 export const modalSlice = createSlice({
   name: 'modal',

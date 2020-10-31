@@ -18,18 +18,20 @@ export const restSlice = createSlice({
 });
 
 export const { renderRest } = restSlice.actions;
-
+/** 请求 restaurant 列表 */
 export const renderRestList = ()=>{
   return async dispatch => {
     try {
       dispatch(showLoading());
       let result =  await restaurant();
       dispatch(renderRest(result));
-      setInterval(() => {
-        dispatch(hideLoading());
-      }, 1000);
+
     } catch (err) {
       dispatch(showErrorAsync(err.message));
+
+    } finally{
+      dispatch(hideLoading());
+
     }
   };
 };

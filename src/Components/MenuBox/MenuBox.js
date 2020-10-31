@@ -18,7 +18,7 @@ import { pushItem ,cart } from './state/reducer';
 import { useParams } from 'react-router-dom';
 
 /* style */
-import './menubox.scss';
+import './menuBox.scss';
 
 export default function MenuBox ({ title,foods }) {
 

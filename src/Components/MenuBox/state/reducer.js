@@ -28,6 +28,11 @@ export const countSlice = createSlice({
       clone.splice(action.payload,1);
       state.array = clone;
       setStorage('cart',_.sortBy(state.array,`name[${initLan}]`));
+      console.log(state.array);
+    },
+    clear:(state)=>{
+      state.array = [];
+      setStorage('cart',[]);
     }
   },
 });
@@ -39,7 +44,7 @@ export const pushItem = (item)=>{
   };
 };
 
-export const { add, remove,push,splice } = countSlice.actions;
+export const { add, remove,push,splice,clear  } = countSlice.actions;
 
 export const ControlCount = state => state.count.value;
 
