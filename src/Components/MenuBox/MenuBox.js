@@ -11,9 +11,11 @@ import { v4 } from 'uuid';
 
 import { useDispatch,useSelector } from 'react-redux';
 
-import { getStorage } from '../../Common/utils';
+import { getStorage,setStorage } from '../../Common/utils';
 
 import { pushItem ,cart } from './state/reducer';
+
+import { useParams } from 'react-router-dom';
 
 /* style */
 import './menuBox.scss';
@@ -25,6 +27,8 @@ export default function MenuBox ({ title,foods }) {
   let cartArray = useSelector(cart);
 
   let dispatch = useDispatch();
+
+  let params = useParams();
 
   useEffect(() => {
     renderFoods();
@@ -42,7 +46,7 @@ export default function MenuBox ({ title,foods }) {
         count = value.length;
       }
     });
-    console.log(count);
+
     if(count === 0){
       return null;
     }else {
@@ -69,6 +73,7 @@ export default function MenuBox ({ title,foods }) {
               /** 如果这个菜品没有售罄 ，添加至vuex 并存入localstorage */
               if(item.available) {
                 dispatch(pushItem(item));
+                setStorage('cartid',params.id);
               }
             } }>
 

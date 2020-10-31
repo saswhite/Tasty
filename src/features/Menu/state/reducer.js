@@ -6,7 +6,7 @@ import { menu } from '../../../Request/menu';
 export const menuSlice = createSlice({
   name: 'menu',
   initialState: {
-    menu:{}
+    menu:{},
   },
   reducers: {
 
