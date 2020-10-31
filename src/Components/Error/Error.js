@@ -18,7 +18,7 @@ export default function Error () {
   function hideErrorModal (){
     dispatch(hideError());
     /** 当用户信息过期时，清空本地user信息，并且跳转至login页面 */
-    if( msg === get(`error.${'auth-failed'}`)){
+    if( msg === get(`error.${'auth-failed'}`) || msg === get( `error.${'need-login'}`)){
       setStorage('user',null);
       history.push('/login');
     }

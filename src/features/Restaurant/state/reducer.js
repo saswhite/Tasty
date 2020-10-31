@@ -25,11 +25,12 @@ export const renderRestList = ()=>{
       dispatch(showLoading());
       let result =  await restaurant();
       dispatch(renderRest(result));
-      setInterval(() => {
-        dispatch(hideLoading());
-      }, 1000);
+
     } catch (err) {
       dispatch(showErrorAsync(err.message));
+    } finally{
+      dispatch(hideLoading());
+
     }
   };
 };
