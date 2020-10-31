@@ -8,20 +8,23 @@ import { v4 } from 'uuid';
 
 import { getStorage } from '../../Common/utils';
 
-import { get } from '../../Common/Intl';
+import { get,init } from '../../Common/Intl';
 
 /* component */
 import Header from '../../Components/Header/Header';
 import Cart from '../../Components/Cart/Cart';
+import MenuBox from '../../Components/MenuBox/MenuBox';
 
 /* style */
 import './menu.scss';
 
 /* action */
 import { sendRequestMenu,renderMenu } from './state/reducer';
-import MenuBox from '../../Components/MenuBox/MenuBox';
+import { language } from '../../Redux/Reducer/header';
 
 export default function Menu () {
+
+  const lan = useSelector(language);
 
   let dispatch = useDispatch();
 
@@ -34,14 +37,18 @@ export default function Menu () {
   let menuList = useSelector(renderMenu);
 
   useEffect(() => {
+    init();
     dispatch(sendRequestMenu(params.id));
   }, []);
+
+  useEffect(()=>{
+    init();
+  },[ lan ]);
 
   let rederMenuBox = ()=>{
 
     if(menuList['categories']) {
       if(menuList['foods'].length !== 0) {
-        console.log(menuList['foods'].length);
         return _.map(menuList['categories'],(item)=>{
           return (
             <MenuBox title={ item } foods={ menuList['foods'] } key={ v4() }></MenuBox>

@@ -1,20 +1,18 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import './cartBox.scss';
-// import { getStorage } from '../../Common/utils';
 
-export default function MenuBox ( { item,count } ) {
+export default function MenuBox ( { item,add,minus } ) {
 
-  console.log(count);
   return (
     <div className='container-between cart-item'>
       <div className='dinner-name'>{item.title }</div>
       <div className='dinner-control container-row' >
         <div className='dinner-price'>${(item.price / 100).toFixed(2)}</div>
         <div className='count-box container-row'>
-          <button className='remove-btn' >-</button>
+          <button className='remove-btn'onClick={ ()=> {minus(item._id);} } >-</button>
           <span>{item.count}</span>
-          <button className='add-btn'>+</button>
+          <button className='add-btn' onClick={ ()=> {add(item.title);} }>+</button>
         </div>
       </div>
     </div>
@@ -22,5 +20,7 @@ export default function MenuBox ( { item,count } ) {
 }
 MenuBox.propTypes = {
   item:propTypes.object,
-  count: propTypes.number
+  count: propTypes.number,
+  add: propTypes.func,
+  minus: propTypes.func
 };
