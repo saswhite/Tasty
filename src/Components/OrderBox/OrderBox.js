@@ -5,37 +5,37 @@ import Moment from 'moment';
 import _ from 'lodash';
 import { v4 } from 'uuid';
 
+/* img */
 import logoLocal from '../../Assets/logo.png';
 
-/** 语言 */
+/* action  */
 import { language  } from '../../Redux/Reducer/header';
-import { init ,get } from '../../Common/Intl';
 
+/* common  */
+import { init ,get } from '../../Common/Intl';
 import { getStorage } from '../../Common/utils';
-/** scss */
+
+/** style */
 import './orderBox.scss';
 
 export default function OrderBox ({ data }) {
-  let lan = useSelector(language);
 
-  let initLan = getStorage('language');
+  let lan = useSelector(language);//保存的语言环境
 
-  let [ scale,setScale ] = useState(false);
+  let initLan = getStorage('language');//初始化的语言环境
 
+  let [ scale,setScale ] = useState(false);//是否点击订单盒子
+
+  /* 点击语言按钮切换语言环境 */
   useEffect(() => {
-
     init();
-
   }, [ lan ]);
 
   useEffect(()=>{
+    /* 语言环境初始化 */
     init();
-
+    /* 计算订单里面每一项的数量 */
     getCartItemCount();
-
-  },[]);
-
-  useEffect(() => {
     /* 给页面加点击事件 */
     document.addEventListener('mousedown', (e)=>{
       let profile = document.getElementsByClassName('order-box-bigger')[0];
@@ -49,7 +49,7 @@ export default function OrderBox ({ data }) {
         }
       }
     });
-  }, []);
+  },[]);
 
   /** 获取每一个 购物车 的菜单 去重 以及获取每个菜的数量 */
   function getCartItemCount (){
@@ -66,9 +66,6 @@ export default function OrderBox ({ data }) {
     }
     /** 返回一个经过去重 和算过数量的数组 */
     return _.uniqWith(array, _.isEqual);
-
-    // console.log(_.groupBy(cart,`name[${initLan}]`));
-    // return (_.groupBy(cart,`name[${initLan}]`));
   }
 
   /**  渲染中间菜品 */
@@ -133,9 +130,11 @@ export default function OrderBox ({ data }) {
     <div className={ `order-box ${scale ? 'order-box-bigger' : ''} ` } >
       <div className='order-title '>
         <div className='title-text order-item-name'>
+          {/* 餐馆名称 */}
           { data.restaurant.name[`${initLan}`] }
         </div>
         <div className='sub-title-text order-item-time'>
+          {/* 订单创建时间 */}
           {Moment(data.createdAt).format('YYYY-MM-DD HH:mm')}
         </div>
       </div>
@@ -145,10 +144,12 @@ export default function OrderBox ({ data }) {
       <div className='order-footer'>
         {scale ? <div className='container-row-center'><img src={ logoLocal }></img></div> : <div></div>}
         <div className='order-total container-row container-between'>
+          {/* 总价 */}
           <div className='total-content'>{get(`menu.${'total'}`)} </div>
           <div className='total-price'>$ {computePrice()}</div>
         </div>
         <div className='more-btn container-row-center'  onClick={ changeScale }>
+          {/* 更多信息 */}
           <button className='normal-btn'>{get(`order.${'more'}`)}</button>
         </div>
       </div>

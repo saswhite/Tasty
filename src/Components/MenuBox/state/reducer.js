@@ -7,16 +7,9 @@ import _ from 'lodash';
 export const countSlice = createSlice({
   name: 'count',
   initialState: {
-    value: 1,
     array: getStorage('cart') || []
   },
   reducers: {
-    add: (state) => {
-      state.value += 1;
-    },
-    remove: state => {
-      state.value -= 1;
-    },
     push: (state,action) =>{
       let initLan = getStorage('language');
       state.array = [ ...state.array,action.payload ];
@@ -44,9 +37,7 @@ export const pushItem = (item)=>{
   };
 };
 
-export const { add, remove,push,splice,clear  } = countSlice.actions;
-
-export const ControlCount = state => state.count.value;
+export const { push,splice,clear  } = countSlice.actions;
 
 export const cart = state => state.count.array;
 

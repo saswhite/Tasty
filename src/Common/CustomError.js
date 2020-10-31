@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import intl from 'react-intl-universal';
 
+/* 自定义error */
 export default function CustomError (err){
   this.details = _.get(err, 'response.data.details');
 
