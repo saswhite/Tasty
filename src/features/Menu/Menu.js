@@ -1,6 +1,7 @@
 import React,{ useEffect } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import moment from 'moment-timezone';
 
 import _ from 'lodash';
 
@@ -14,6 +15,7 @@ import { get,init } from '../../Common/Intl';
 import Header from '../../Components/Header/Header';
 import Cart from '../../Components/Cart/Cart';
 import MenuBox from '../../Components/MenuBox/MenuBox';
+import { showErrorAsync } from '../../Redux/Reducer/error';
 
 /* style */
 import './menu.scss';
@@ -37,13 +39,43 @@ export default function Menu () {
   let menuList = useSelector(renderMenu);
 
   useEffect(() => {
-    init();
+    // init();
     dispatch(sendRequestMenu(params.id));
   }, []);
 
   useEffect(()=>{
     init();
   },[ lan ]);
+
+  /* 30s检测开关点 */
+  useEffect(()=>{
+    console.log(restInfo);
+    let date = new Date();
+    var newYork = moment.tz(date,'America/New_York');
+    let checkTime = newYork.hours() * 60 + newYork.minutes();
+    let timer = setInterval(()=>{
+      let isOpen = true;
+      if(restInfo.closed){
+        isOpen = false;
+      }else{
+        _.map(restInfo.hours,(item)=>{
+          if(item.dayOfWeek == newYork.day() && item.start <= checkTime && checkTime <= item.end){
+            isOpen = true;
+          }else{
+            isOpen = false;
+          }
+        });
+      }
+      if(!isOpen){
+        dispatch(showErrorAsync('该店已关闭！'));
+      }
+    },10000);
+    return ()=>{
+      if(timer){
+        clearInterval(timer);
+      }
+    };
+  },[]);
 
   let rederMenuBox = ()=>{
 
