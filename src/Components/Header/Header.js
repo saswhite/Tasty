@@ -18,6 +18,7 @@ import './header.scss';
 /* action */
 import {  showZh,showEn,showProfile,hideProfile,isClick,language } from '../../Redux/Reducer/header';
 import { showLoading,hideLoading } from '../../Redux/Reducer/loading';
+import { clearUserInfo } from '../../Features/Login/state/reducer';
 
 export default function Header () {
 
@@ -45,10 +46,8 @@ export default function Header () {
   /** 点击历史订单 */
   let pushOrder = ()=>{
     dispatch(showLoading());
-    setInterval(() => {
-      dispatch(hideLoading());
-    },500);
     history.push('/order');
+    dispatch(hideLoading());
   };
 
   /* 获取元素在页面中的绝对位置的x坐标 */
@@ -150,6 +149,7 @@ export default function Header () {
         onClick={ ()=>{
           setIsLogout(true);
           localStorage.removeItem('user');
+          dispatch(clearUserInfo());
         } }
         type="button">{get('logout')}</button>);
     }else {

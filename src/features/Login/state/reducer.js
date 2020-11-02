@@ -14,10 +14,13 @@ export const loginSlice = createSlice({
     userInfo: (state, action) => {
       state.user = action.payload;
     },
+    clearUserInfo:state =>{
+      state.user = {};
+    }
   },
 });
 
-export const { userInfo } = loginSlice.actions;
+export const { userInfo ,clearUserInfo } = loginSlice.actions;
 
 /**  发送登录请求 */
 export const sendRequestLogin = (data)=>{

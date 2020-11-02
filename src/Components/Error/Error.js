@@ -3,6 +3,7 @@ import { useSelector ,useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { selectErrorMsg, selectIsError ,hideError } from '../../Redux/Reducer/error';
+import { clearUserInfo } from '../../Features/Login/state/reducer';
 import { get } from '../../Common/Intl';
 import { setStorage } from '../../Common/utils';
 /** scss */
@@ -19,6 +20,7 @@ export default function Error () {
     dispatch(hideError());
     /** 当用户信息过期时，清空本地user信息，并且跳转至login页面 */
     if( msg === get(`error.${'auth-failed'}`) || msg === get( `error.${'need-login'}`)){
+      dispatch(clearUserInfo());
       setStorage('user',null);
       history.push('/login');
     }

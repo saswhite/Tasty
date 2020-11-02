@@ -35,13 +35,17 @@ export default function Order () {
 
   /** 渲染右侧历史订单列表 */
   function renderOrderList (){
-    return _.map(list,(item,index)=>{
-      return (
-        <div key={ v4() } className='container-row-center'>
-          <OrderBox data={ item } index={ index }></OrderBox>
-        </div>
-      );
-    });
+    if(list.length > 0){
+      return _.map(list,(item)=>{
+        return (
+          <div key={ v4() } className='container-row-center'>
+            <OrderBox data={ item }></OrderBox>
+          </div>
+        );
+      });
+    }else{
+      return <div className='h3'>You did not order.</div>;
+    }
   }
 
   return (
