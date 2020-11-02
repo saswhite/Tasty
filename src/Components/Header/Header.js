@@ -18,37 +18,47 @@ import './header.scss';
 /* action */
 import {  showZh,showEn,showProfile,hideProfile,isClick,language } from '../../Redux/Reducer/header';
 import { showLoading,hideLoading } from '../../Redux/Reducer/loading';
+import { clearUserInfo } from '../../Features/Login/state/reducer';
 
 export default function Header () {
 
-  let initLan = getStorage('language');
+  const initLan = getStorage('language');//初始化的语言
+  const initUser = getStorage('user');//初始化的用户信息
 
-  let initUser = getStorage('user');
+  const [ isLogout,setIsLogout ] = useState(false);/* 是否点击登出按钮 */
 
-  let [ isLogout,setIsLogout ] = useState(false);
+  const lan = useSelector(language);//保存的语言环境
+  const isShow = useSelector(isClick);//配置菜单是否显示
 
-  let lan = useSelector(language);
-  /** 小窗口显示与否 */
-  let isShow = useSelector(isClick);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
 
-  let dispatch = useDispatch();
-
-  let location = useLocation();
-
-  let history = useHistory();
-
+  /* 页面元素刚加载的时候 */
   useEffect(() => {
+    /* 给页面的语言环境初始化 */
     init();
+    /* 给历史订单按钮的状态初始化 */
     renderHistoryBtn();
+    /* 给页面加点击事件 */
+    document.addEventListener('mousedown', (e)=>{
+      let profile = document.getElementsByClassName('profile-drop-down')[0];
+      if(profile !== undefined) {
+        let x = getElementLeft(profile);
+        let y = getElementTop(profile);
+        /* 鼠标点击在profile窗口之外时隐藏 */
+        if(e.pageX < x  || e.pageX > (x + profile.offsetWidth) ||  e.pageY < y || e.pageY > (y + profile.offsetHeight)){
+          dispatch(hideProfile());
+        }
+      }
+    });
   }, []);
 
   /** 点击历史订单 */
   let pushOrder = ()=>{
     dispatch(showLoading());
-    setInterval(() => {
-      dispatch(hideLoading());
-    },500);
     history.push('/order');
+    dispatch(hideLoading());
   };
 
   /* 获取元素在页面中的绝对位置的x坐标 */
@@ -77,16 +87,18 @@ export default function Header () {
     return actualTop;
   };
 
-  /* profile窗口 */
+  /* profile窗口的渲染 */
   let renderProfile = ()=>{
     if(isShow){
       return (<div className="profile-drop-down">
         { renderHistoryBtn() }
         <div className="language-button">
+          {/* 中文按钮 */}
           <button
             onClick={ async ()=>{await setCh(); dispatch(showZh());} }
             id={ lan === 'zh-CN' || initLan === 'zh-CN' ? 'on-choose' : '' }
             type="button">中</button>
+          {/* 英文按钮 */}
           <button onClick={ async ()=>{await setEn(); dispatch(showEn());}  }
             id={ lan === 'en-US' || initLan === 'en-US' ? 'on-choose' : '' } type="button">En</button>
         </div>
@@ -150,27 +162,13 @@ export default function Header () {
         onClick={ ()=>{
           setIsLogout(true);
           localStorage.removeItem('user');
+          dispatch(clearUserInfo());
         } }
         type="button">{get('logout')}</button>);
     }else {
       return null;
     }
   };
-
-  useEffect(() => {
-    /* 给页面加点击事件 */
-    document.addEventListener('mousedown', (e)=>{
-      let profile = document.getElementsByClassName('profile-drop-down')[0];
-      if(profile !== undefined) {
-        let x = getElementLeft(profile);
-        let y = getElementTop(profile);
-        /* 鼠标点击在profile窗口之外时隐藏 */
-        if(e.pageX < x  || e.pageX > (x + profile.offsetWidth) ||  e.pageY < y || e.pageY > (y + profile.offsetHeight)){
-          dispatch(hideProfile());
-        }
-      }
-    });
-  }, []);
 
   return (
     <div className="header">

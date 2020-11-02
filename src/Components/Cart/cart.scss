@@ -128,8 +128,11 @@
           border-radius : 25px;
           transition : all .3s linear;
         }
-        button:hover{
+        .cart-btn:hover{
           background-color :  #0d9e65 !important;
+        }
+        .cart-disabled-btn {
+          background-color : #afafaf !important;
         }
       }
     }

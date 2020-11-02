@@ -1,3 +1,4 @@
+/* 如果餐馆没有三个特别菜 */
 export const defaultItems =  [
   {
     name: {

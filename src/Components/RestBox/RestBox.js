@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux';
 
 import _ from 'lodash';
 
+import { v4 } from 'uuid';
+
 import { defaultItems } from '../../Common/defaultItems';
 
 import { getStorage,setStorage } from '../../Common/utils';
@@ -25,13 +27,13 @@ import dash from '../../Assets/dark-dish.png';
 
 export default function RestBox ({ data }) {
 
-  let lan = useSelector(language);
+  const lan = useSelector(language);
 
-  let [ isHover,setIsHover ] = useState(false);
+  const [ isHover,setIsHover ] = useState(false);
 
-  let initLan = getStorage('language');
+  const initLan = getStorage('language');
 
-  let history = useHistory();
+  const history = useHistory();
 
   useEffect(() => {
     init();
@@ -40,6 +42,14 @@ export default function RestBox ({ data }) {
   useEffect(() => {
     init();
   }, [ lan ]);
+
+  let renderTags = ()=>{
+    return _.map(data.tags,(item)=>{
+      return (
+        <span className="subTitleText" key={ v4() }>{get(`tags.${item}`)}</span>
+      );
+    });
+  };
 
   return (
     <div className="rest-box"
@@ -54,7 +64,7 @@ export default function RestBox ({ data }) {
         setIsHover(false);
       } }>
       <div className="titleText">{data.name[`${initLan}`]}</div>
-      <div className="subTitleText">{get(`tags.${data.tags[0]}`)}</div>
+      {renderTags()}
       <div>
         <div className="img-box">
           <div className="img-box1">
