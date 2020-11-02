@@ -46,12 +46,8 @@ export default function Restaurant () {
     let date = new Date();
     var newYork = moment.tz(date,'America/New_York');
     let checkTime = newYork.hours() * 60 + newYork.minutes();
-    // let week = newYork.day() + 1;
-    // if(week === 7){
-    //   week = 0;
-    // }
-    console.log(checkTime);
-    console.log(newYork.day());
+    // console.log(checkTime);
+    // console.log(newYork.day());
     let newArr = [];
     _.map(list,(item)=>{
       if(item.closed){
@@ -99,14 +95,8 @@ export default function Restaurant () {
   /* 排序 */
   function orderRest (){
     /* 先判断是否开门 */
-    // setInterval(() => {
-    //   setArray([]);
     let array = isClosed();
     array = _.orderBy(array,[ 'closed', 'featured','zscore' ],[ 'asc','desc','desc' ]);
-    let test = _.map(array,(item)=>{
-      return ({ closed:item.closed,item:item ,hours:item.hours } );
-    });
-    console.log(test);
     return array;
   }
 
