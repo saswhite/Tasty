@@ -1,9 +1,15 @@
 import React, { useState  } from 'react';
 import intl from 'react-intl-universal';
-import './modal.scss';
 import { useSelector, useDispatch } from 'react-redux';
+
+/* style */
+import './modal.scss';
+
+/* action */
 import { isShow,postRegist,hideModal  } from '../../Redux/Reducer/Modal';
 import { showErrorAsync } from '../../Redux/Reducer/error';
+
+/* components */
 import { encode } from '../../Common/crypto';
 
 export default function Modal () {
@@ -11,6 +17,7 @@ export default function Modal () {
 
   const dispatch = useDispatch();
 
+  /* 给注册信息初始化 */
   const [ registInfo,setRegistInfo ] = useState({
     username:'',
     password:'',
