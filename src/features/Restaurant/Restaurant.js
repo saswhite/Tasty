@@ -29,6 +29,8 @@ export default function Restaurant () {
 
   let rest = useSelector(restdata);
 
+  // const [ array,setArray ] = useState([]);
+
   useEffect( () => {
     init();
     dispatch(renderRestList());
@@ -38,41 +40,79 @@ export default function Restaurant () {
     init();
   }, [ lan ]);
 
-  /* 排序 */
-  function isOpen (){
+  /* 判断是否关门 */
+  function isClosed  (){
     let list = rest.list;
     let date = new Date();
     var newYork = moment.tz(date,'America/New_York');
-    const time = new Date(newYork);
-    let checkTime = time.getHours() * 60 + time.getMinutes();
-
-    if(list){
-      let newArr = _.map(list,(item)=>{
-        if(!item.closed){
-          _.map(item.hours,(hourItem)=>{
-            if(hourItem.dayOfWeek === newYork.day()){
-              if(hourItem.start <= checkTime && checkTime <= hourItem.end){
-                item = { ...item,closed:false };
-              }
-              else{
-                item = { ...item,closed:true };
-              }
+    let checkTime = newYork.hours() * 60 + newYork.minutes();
+    // let week = newYork.day() + 1;
+    // if(week === 7){
+    //   week = 0;
+    // }
+    console.log(checkTime);
+    console.log(newYork.day());
+    let newArr = [];
+    _.map(list,(item)=>{
+      if(item.closed){
+        newArr.push({ ...item,closed:true });
+      }else{
+        // let perItem = [];
+        let flag = true;
+        _.map(item.hours,(hourItem)=>{
+          if(hourItem.dayOfWeek == newYork.day()){
+            /* 开门 */
+            if(hourItem.start <= checkTime && checkTime <= hourItem.end){
+              // perItem.push(false);
+              flag = false;
             }
-          });
-        }else{
-          item = { ...item,closed:true };
-        }
-        return item;
-      });
-      return newArr;
-    }
+            /* 不在开店时间内 */
+            else{
+              // perItem.push(true);
+              flag = true;
+            }
+          }
+          /* 一整天不开门 */
+          else{
+            // perItem.push(true);
+            flag = true;
 
+          }
+        });
+
+        // if(_.indexOf(perItem,false) > -1){
+        //   newArr.push({ ...item,closed:false });
+
+        // }else{
+        //   newArr.push({ ...item,closed:true });
+        // }
+        if(flag){
+          newArr.push({ ...item,closed:true });
+        }else{
+          newArr.push({ ...item,closed:false });
+        }
+      }
+    });
+    return newArr;
   }
 
-  let renderRestBox = ()=>{
-    let array = isOpen();
+  /* 排序 */
+  function orderRest (){
+    /* 先判断是否开门 */
+    // setInterval(() => {
+    //   setArray([]);
+    let array = isClosed();
     array = _.orderBy(array,[ 'closed', 'featured','zscore' ],[ 'asc','desc','desc' ]);
-    return _.map(array,((item,index)=>{
+    let test = _.map(array,(item)=>{
+      return ({ closed:item.closed,item:item ,hours:item.hours } );
+    });
+    console.log(test);
+    return array;
+  }
+
+  /* 渲染餐馆 */
+  let renderRestBox = ()=>{
+    return _.map(orderRest(),((item,index)=>{
       return (
         <div key={ v4() } style={{ paddingTop :(index + 1 ) % 2 === 0 ? '236px' : '' }}>
           <RestBox data={ item } ></RestBox>
