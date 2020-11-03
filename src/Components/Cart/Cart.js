@@ -47,7 +47,7 @@ export default function Cart () {
   /* 当保存的购物车列表变化的时候给下单按钮的点击状态更新 */
   useEffect(() => {
     renderDisabled();
-  }, [ cartList.length ]);
+  }, [ array.length ]);
 
   /* 当点击中英文按钮之后切换语言环境 */
   useEffect(()=>{
@@ -90,7 +90,7 @@ export default function Cart () {
 
   /* 判断购物车列表是否是空的来决定下单按钮点击的状态 */
   let renderDisabled = ()=>{
-    if(cartList === []){
+    if(cartList === [] || !cartList){
       dispatch(setIsDisabledTrue());
     }else {
       dispatch(setIsDisabledFalse());

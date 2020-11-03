@@ -33,7 +33,7 @@ export default function MenuBox ({ title,foods }) {
   }, [ cartArray ]);
 
   let renderDisabled = ()=>{
-    if(cartList === []){
+    if(cartList === [] || !cartList){
       dispatch(setIsDisabledTrue());
     }else {
       dispatch(setIsDisabledFalse());

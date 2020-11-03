@@ -46,8 +46,6 @@ export default function Restaurant () {
     let date = new Date();
     var newYork = moment.tz(date,'America/New_York');
     let checkTime = newYork.hours() * 60 + newYork.minutes();
-    // console.log(checkTime);
-    // console.log(newYork.day());
     let newArr = [];
     _.map(list,(item)=>{
       if(item.closed){

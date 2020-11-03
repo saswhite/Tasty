@@ -7,7 +7,7 @@ import _ from 'lodash';
 
 import { v4 } from 'uuid';
 
-import { getStorage } from '../../Common/utils';
+import { getStorage, setStorage } from '../../Common/utils';
 
 import { get,init } from '../../Common/Intl';
 
@@ -28,18 +28,24 @@ export default function Menu () {
 
   const lan = useSelector(language);
 
-  let dispatch = useDispatch();
+  const array = useSelector(state => state.count.array);//获取rudex里面保存的购物车列表
 
-  let params = useParams();
+  const dispatch = useDispatch();
 
-  let restInfo = getStorage('restaurant');
+  const params = useParams();
 
-  let initLan = getStorage('language');
+  const restInfo = getStorage('restaurant');
 
-  let menuList = useSelector(renderMenu);
+  const initLan = getStorage('language');
+
+  const cartList = getStorage('cart');
+
+  const menuList = useSelector(renderMenu);
 
   useEffect(() => {
-    // init();
+    if(!cartList){
+      setStorage('cart',array);
+    }
     dispatch(sendRequestMenu(params.id));
   }, []);
 
