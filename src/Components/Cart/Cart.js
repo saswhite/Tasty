@@ -44,11 +44,6 @@ export default function Cart () {
 
   const history = useHistory();
 
-  /* 当保存的购物车列表变化的时候给下单按钮的点击状态更新 */
-  useEffect(() => {
-    renderDisabled();
-  }, [ cartList.length ]);
-
   /* 当点击中英文按钮之后切换语言环境 */
   useEffect(()=>{
     init();
@@ -87,6 +82,11 @@ export default function Cart () {
       }
     }
   },[]);
+
+  /* 当保存的购物车列表变化的时候给下单按钮的点击状态更新 */
+  useEffect(() => {
+    renderDisabled();
+  }, []);
 
   /* 判断购物车列表是否是空的来决定下单按钮点击的状态 */
   let renderDisabled = ()=>{
