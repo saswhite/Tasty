@@ -23,7 +23,7 @@ export const countSlice = createSlice({
       clone.splice(action.payload,1);
       state.array = clone;
       setStorage('cart',_.sortBy(state.array,`name[${initLan}]`));
-      console.log(state.array);
+      // console.log(state.array);
     },
     /* 清空 */
     clear:(state)=>{

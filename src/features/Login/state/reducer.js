@@ -34,7 +34,7 @@ export const sendRequestLogin = (data)=>{
 
       /** 存入locastorage */
       setStorage('user',loginRes);
-      console.log(loginRes);
+      // console.log(loginRes);
 
       dispatch(userInfo(loginRes));
 
