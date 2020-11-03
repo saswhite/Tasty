@@ -13,7 +13,7 @@ import { language  } from '../../Redux/Reducer/header';
 
 /* common  */
 import { init ,get } from '../../Common/Intl';
-import { getStorage } from '../../Common/utils';
+import { getStorage,groupMap } from '../../Common/utils';
 
 /** style */
 import './orderBox.scss';
@@ -32,10 +32,8 @@ export default function OrderBox ({ data }) {
   }, [ lan ]);
 
   useEffect(()=>{
-    /* 语言环境初始化 */
-    init();
     /* 计算订单里面每一项的数量 */
-    getCartItemCount();
+    groupMap(data.cart);
     /* 给页面加点击事件 */
     document.addEventListener('mousedown', (e)=>{
       let profile = document.getElementsByClassName('order-box-bigger')[0];
@@ -51,30 +49,13 @@ export default function OrderBox ({ data }) {
     });
   },[]);
 
-  /** 获取每一个 购物车 的菜单 去重 以及获取每个菜的数量 */
-  function getCartItemCount (){
-    let cart = data.cart;
-    let array = [];
-    for (let i = 0; i < cart.length; i++){
-      let count = 0;
-      for (let j = 0; j <= cart.length - 1; j++) {
-        if(cart[i]._id === cart[j]._id){
-          count += 1;
-          array[i] = { name:cart[i].name,price:cart[i].price,count:count };
-        }
-      }
-    }
-    /** 返回一个经过去重 和算过数量的数组 */
-    return _.uniqWith(array, _.isEqual);
-  }
-
   /**  渲染中间菜品 */
   function renderCartItem (){
-    let list = getCartItemCount();
+    let list = groupMap(data.cart);
     return _.map(list,(item)=>{
       return(
         <div className='cart-item container-row container-between' key={ v4() }>
-          <div className='cart-item-name'>{item.name[`${initLan}`]}</div>
+          <div className='cart-item-name'>{item.title}</div>
           <div className='container-row'>
             {scale ? <div className='cart-item-price'> ${(( Number(item.price ) * Number(item.count)) / 100).toFixed(2)} </div> : <div></div>}
             <div className='cart-item-count-no-editable'>{item.count}</div>
@@ -86,7 +67,7 @@ export default function OrderBox ({ data }) {
 
   /** 计算每个item 的总价 */
   function computePrice (){
-    let list = getCartItemCount();
+    let list = groupMap(data.cart);
     let price = 0;
     _.map(list,(item)=>{
       price += Number(item.price ) * Number(item.count);

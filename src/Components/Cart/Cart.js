@@ -14,7 +14,7 @@ import wechat from '../../Assets/wechat_big.png';
 import apple from '../../Assets/applepay.png';
 
 /* common */
-import { setStorage,getStorage } from '../../Common/utils';
+import { setStorage,getStorage,groupMap } from '../../Common/utils';
 import{ init,get  } from '../../Common/Intl';
 
 /* action */
@@ -121,28 +121,9 @@ export default function Cart () {
     });
   };
 
-  /* 返回购物车里面要使用的列表和每一项要用的数据 */
-  let renderList = ()=>{
-    let list = [];
-    _.forIn(_.groupBy(array,`name[${initLan}]`),(value,key)=>{
-      let item = {
-        title:'',
-        count : 0,
-        price: 0,
-        _id:''
-      };
-      item.title = key.toString();
-      item.count = value.length;
-      item.price = value[0].price;
-      item._id = value[0]._id;
-      list.push(item);
-    });
-    return list;
-  };
-
   /* 返回总价 */
   let renderTotal = ()=>{
-    let arr = renderList();
+    let arr = groupMap(array);
     let total =  _.reduce(arr, (sum, item)=> {
       return sum + item.count * (item.price / 100).toFixed(2);
     }, 0);
@@ -152,7 +133,7 @@ export default function Cart () {
   /* 决定购物车菜单的显示状态 */
   let renderMenu = ()=>{
     if(array.length > 0){
-      let arr = renderList();
+      let arr = groupMap(array);
       return renderCartList(arr);
     }else{
       dispatch(setIsDisabledTrue());
