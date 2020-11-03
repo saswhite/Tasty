@@ -60,6 +60,7 @@ export default function Cart () {
 
   /* 页面元素已经加载好之后 */
   useEffect(()=>{
+    renderDisabled();
     /*如果切换了菜单页面，给购物车id清空 */
     if(params.id !== cartId){
       setStorage('cart',[]);
@@ -106,7 +107,11 @@ export default function Cart () {
   let renderCartList = (list)=>{
     return _.map(list,(item)=>{
       return (
-        <CartBox item={ item }  add={ (name)=>{add(name);} }  minus={ (_id)=>{minus(_id);} }  key={ Math.random() }></CartBox>
+        <CartBox
+          item={ item }
+          add={ (name)=>{add(name);} }
+          minus={ (_id)=>{minus(_id);} }
+          key={ Math.random() }></CartBox>
       );
     });
   };

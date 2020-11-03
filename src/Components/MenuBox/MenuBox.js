@@ -1,38 +1,44 @@
 
 import React,{ useEffect } from 'react';
-
-// import React from 'react';
-
 import PropTypes from 'prop-types';
-
 import _ from 'lodash';
-
 import { v4 } from 'uuid';
-
 import { useDispatch,useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
+/* common */
 import { getStorage,setStorage } from '../../Common/utils';
 
+/* action */
 import { pushItem ,cart } from './state/reducer';
-
-import { useParams } from 'react-router-dom';
+import { setIsDisabledTrue,setIsDisabledFalse } from '../../Features/Menu/state/reducer';
 
 /* style */
 import './menuBox.scss';
 
 export default function MenuBox ({ title,foods }) {
 
-  let initLan = getStorage('language');
+  const cartList = getStorage('cart');//获取保存的购物车列表
 
-  let cartArray = useSelector(cart);
+  const initLan = getStorage('language');
 
-  let dispatch = useDispatch();
+  const cartArray = useSelector(cart);
 
-  let params = useParams();
+  const dispatch = useDispatch();
+
+  const params = useParams();
 
   useEffect(() => {
     renderFoods();
   }, [ cartArray ]);
+
+  let renderDisabled = ()=>{
+    if(cartList === []){
+      dispatch(setIsDisabledTrue());
+    }else {
+      dispatch(setIsDisabledFalse());
+    }
+  };
 
   /** 渲染菜品前的数量圆圈 */
   let renderCircle = (item)=>{
@@ -74,6 +80,7 @@ export default function MenuBox ({ title,foods }) {
               if(item.available) {
                 dispatch(pushItem(item));
                 setStorage('cartid',params.id);
+                renderDisabled();
               }
             } }>
 
