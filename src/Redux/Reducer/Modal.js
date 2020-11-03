@@ -19,16 +19,21 @@ export const modalSlice = createSlice({
     }
   },
 });
-
+/* 注册 */
 export  function postRegist (registInfo){
   return async (dispatch)=>{
     try {
+      /* 显示loading */
       dispatch(showLoading());
+      /* 发送注册请求 */
       await regist(registInfo);
+      /* 隐藏注册界面 */
       dispatch(hideModal());
+      /* 显示注册结果 */
       dispatch(showErrorAsync(intl.get('login.signUpSuccess')));
       return true;
     } catch (error) {
+      /* 请求失败显示error */
       dispatch(showErrorAsync(error.message));
     }finally{
       dispatch(hideLoading());

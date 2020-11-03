@@ -43,6 +43,7 @@ export default function RestBox ({ data }) {
     init();
   }, [ lan ]);
 
+  /* 渲染标签 */
   let renderTags = ()=>{
     return _.map(data.tags,(item)=>{
       return (

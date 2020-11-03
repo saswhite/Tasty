@@ -53,35 +53,24 @@ export default function Restaurant () {
       if(item.closed){
         newArr.push({ ...item,closed:true });
       }else{
-        // let perItem = [];
         let flag = true;
         _.map(item.hours,(hourItem)=>{
           if(hourItem.dayOfWeek == newYork.day()){
             /* 开门 */
             if(hourItem.start <= checkTime && checkTime <= hourItem.end){
-              // perItem.push(false);
               flag = false;
             }
             /* 不在开店时间内 */
             else{
-              // perItem.push(true);
               flag = true;
             }
           }
           /* 一整天不开门 */
           else{
-            // perItem.push(true);
             flag = true;
 
           }
         });
-
-        // if(_.indexOf(perItem,false) > -1){
-        //   newArr.push({ ...item,closed:false });
-
-        // }else{
-        //   newArr.push({ ...item,closed:true });
-        // }
         if(flag){
           newArr.push({ ...item,closed:true });
         }else{
@@ -96,7 +85,12 @@ export default function Restaurant () {
   function orderRest (){
     /* 先判断是否开门 */
     let array = isClosed();
+    /* 排序 */
     array = _.orderBy(array,[ 'closed', 'featured','zscore' ],[ 'asc','desc','desc' ]);
+    let test = _.map(array,(item)=>{
+      return item.closed;
+    });
+    console.log(test);
     return array;
   }
 

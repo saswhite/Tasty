@@ -8,7 +8,7 @@ import './loading.scss';
 import loadingLocal from '../../Assets/loading.gif';
 
 export default function Loading () {
-
+/* state中获取是否登录 */
   const isLoading = useSelector(selectIsLoading);
 
   return (

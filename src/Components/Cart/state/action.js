@@ -6,11 +6,13 @@ import { getStorage } from '../../../Common/utils';
 import { get } from '../../../Common/Intl';
 export function checkOrder (orderInfo,history){
 
-  console.log(orderInfo);
+  // console.log(orderInfo);
   return async (dispatch)=>{
     try {
+      /* loading */
       dispatch(showLoading());
       let isLogin = getStorage('user') ? true : false;
+      /* 判断是否登录 */
       if(isLogin){
         await putOrder(orderInfo);
         history.push('/order');

@@ -13,17 +13,17 @@ export const errorSlice = createSlice({
     },
     hideError: state => {
       state.isError = false;
-    },
+    }
   },
 });
 
 export const { showError, hideError } = errorSlice.actions;
 
 /** 实时更改error框的message */
-export const showErrorAsync = ( message )=>{
+export const showErrorAsync = (  message )=>{
 
   return (dispatch)=>{
-    return dispatch(showError(message));
+    return dispatch(showError( message));
   };
 };
 

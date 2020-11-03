@@ -47,38 +47,44 @@ export default function Menu () {
     init();
   },[ lan ]);
 
-  /* 30s检测开关点 */
+  /* 每30s检测 */
   useEffect(()=>{
-    console.log(restInfo);
-    let date = new Date();
-    var newYork = moment.tz(date,'America/New_York');
-    let checkTime = newYork.hours() * 60 + newYork.minutes();
     let timer = setInterval(()=>{
-      let isOpen = true;
-      if(restInfo.closed){
-        isOpen = false;
-      }else{
-        _.map(restInfo.hours,(item)=>{
-          if(item.dayOfWeek == newYork.day() && item.start <= checkTime && checkTime <= item.end){
-            isOpen = true;
-          }else{
-            isOpen = false;
-          }
-        });
+      let flag = checkOpen();
+      if(!flag){
+        dispatch(showErrorAsync('该店已关闭'));
       }
-      if(!isOpen){
-        dispatch(showErrorAsync('该店已关闭！'));
-      }
-    },10000);
+    },30000);
     return ()=>{
       if(timer){
         clearInterval(timer);
       }
     };
   },[]);
+  /* 检测开关店 */
+  function checkOpen (){
+    let date = new Date();
+    var newYork = moment.tz(date,'America/New_York');
+    let checkTime = newYork.hours() * 60 + newYork.minutes();
+    let isOpen = true;
+    /* 是否人为关闭 */
+    if(restInfo.closed){
+      isOpen = false;
+    }else{
+      /* 是否在开店时间内 */
+      _.map(restInfo.hours,(item)=>{
+        if(item.dayOfWeek == newYork.day() && item.start <= checkTime && checkTime <= item.end){
+          isOpen = true;
+        }else{
+          isOpen = false;
+        }
+      });
+    }
+    return isOpen;
+  }
 
+  /* 渲染菜单 */
   let rederMenuBox = ()=>{
-
     if(menuList['categories']) {
       if(menuList['foods'].length !== 0) {
         return _.map(menuList['categories'],(item)=>{
@@ -87,7 +93,6 @@ export default function Menu () {
           );
         });
       }else {
-
         return (
           <div>{get(`menu.${'no-menu'}`)}</div>
         );
