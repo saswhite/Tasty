@@ -60,7 +60,7 @@ export default function Menu () {
     checkOpen();
     let timer = setInterval(()=>{
       checkOpen();
-    },3000);
+    },30000);
     return ()=>{
       if(timer){
         clearInterval(timer);
