@@ -14,7 +14,7 @@ import wechat from '../../Assets/wechat_big.png';
 import apple from '../../Assets/applepay.png';
 
 /* common */
-import { setStorage,getStorage } from '../../Common/utils';
+import { setStorage,getStorage,renderList ,getTotalPrice } from '../../Common/utils';
 import{ init,get  } from '../../Common/Intl';
 
 /* action */
@@ -121,38 +121,10 @@ export default function Cart () {
     });
   };
 
-  /* 返回购物车里面要使用的列表和每一项要用的数据 */
-  let renderList = ()=>{
-    let list = [];
-    _.forIn(_.groupBy(array,`name[${initLan}]`),(value,key)=>{
-      let item = {
-        title:'',
-        count : 0,
-        price: 0,
-        _id:''
-      };
-      item.title = key.toString();
-      item.count = value.length;
-      item.price = value[0].price;
-      item._id = value[0]._id;
-      list.push(item);
-    });
-    return list;
-  };
-
-  /* 返回总价 */
-  let renderTotal = ()=>{
-    let arr = renderList();
-    let total =  _.reduce(arr, (sum, item)=> {
-      return sum + item.count * (item.price / 100).toFixed(2);
-    }, 0);
-    return total.toFixed(2);
-  };
-
   /* 决定购物车菜单的显示状态 */
   let renderMenu = ()=>{
     if(array.length > 0){
-      let arr = renderList();
+      let arr = renderList(array);
       return renderCartList(arr);
     }else{
       dispatch(setIsDisabledTrue());
@@ -243,7 +215,7 @@ export default function Cart () {
             {isExpand ?
               <div className='total-price container-between'>
                 <span>{get(`menu.${'total'}`)}</span>{/* 总价 */}
-                <span>{`$ ${renderTotal()}`}</span>
+                <span>{`$ ${getTotalPrice(array)}`}</span>
               </div> : null}
             {isExpand ?
               <button onClick={ orderClick } style={{ backgroundColor :!isExpand ? 'black ' : ' #0d9e65 ' }}>
@@ -254,7 +226,7 @@ export default function Cart () {
                 onClick={ ()=>{setIsExpand(true);} }
                 style={{ backgroundColor :!isExpand ? 'black ' : ' #0d9e65 ' }}
                 disabled={ isDisabled }>
-              ${renderTotal()}
+              ${getTotalPrice(array)}
               </button>
             }
           </div>
