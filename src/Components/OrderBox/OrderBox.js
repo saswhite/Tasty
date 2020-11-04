@@ -13,7 +13,7 @@ import { language  } from '../../Redux/Reducer/header';
 
 /* common  */
 import { init ,get } from '../../Common/Intl';
-import { getStorage , getTotalPrice ,renderList } from '../../Common/utils';
+import { getStorage,groupMap,getTotalPrice } from '../../Common/utils';
 
 /** style */
 import './orderBox.scss';
@@ -40,7 +40,7 @@ export default function OrderBox ({ data }) {
 
   /**  渲染中间菜品 */
   function renderCartItem (){
-    let list = renderList(data.cart);
+    let list = groupMap(data.cart);
     return _.map(list,(item)=>{
       return(
         <div className='cart-item container-row container-between' key={ v4() }>

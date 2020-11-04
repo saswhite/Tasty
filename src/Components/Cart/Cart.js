@@ -14,7 +14,7 @@ import wechat from '../../Assets/wechat_big.png';
 import apple from '../../Assets/applepay.png';
 
 /* common */
-import { setStorage,getStorage,renderList ,getTotalPrice } from '../../Common/utils';
+import { setStorage,getStorage,groupMap,getTotalPrice  } from '../../Common/utils';
 import{ init,get  } from '../../Common/Intl';
 
 /* action */
@@ -124,7 +124,7 @@ export default function Cart () {
   /* 决定购物车菜单的显示状态 */
   let renderMenu = ()=>{
     if(array.length > 0){
-      let arr = renderList(array);
+      let arr = groupMap(array);
       return renderCartList(arr);
     }else{
       dispatch(setIsDisabledTrue());

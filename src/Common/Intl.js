@@ -11,23 +11,13 @@ const locales = {
 /* 获取和设置localstorage里面特定的值 */
 import { setStorage,getStorage } from './utils';
 
-/* 设置页面语言环境为英文 */
-export function setEn () {
+/* 设置页面语言环境 */
+export function setLan (lan) {
   intl.init({
-    currentLocale: 'en-US', // TODO: determine locale here
+    currentLocale: lan, // TODO: determine locale here
     locales,
   });
-  setStorage('language','en-US');
-}
-
-/* 设置页面语言环境为中文 */
-export function setCh () {
-
-  intl.init({
-    currentLocale: 'zh-CN', // TODO: determine locale here
-    locales,
-  });
-  setStorage('language','zh-CN');
+  setStorage('language',lan);
 }
 
 /* 从设定好的两个文件中找对应的值 */
@@ -39,9 +29,9 @@ export function get (string){
 export function init (){
   let initlan = getStorage('language');
   if(initlan === 'en-US'){
-    setEn();
+    setLan('en-US');
   }else {
-    setCh();
+    setLan('zh-CN');
   }
 }
 

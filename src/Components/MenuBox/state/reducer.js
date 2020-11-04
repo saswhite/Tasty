@@ -12,18 +12,15 @@ export const countSlice = createSlice({
   reducers: {
     /* 增加 */
     push: (state,action) =>{
-      let initLan = getStorage('language');
       state.array = [ ...state.array,action.payload ];
-      setStorage('cart',_.sortBy(state.array,`name[${initLan}]`));
+      setStorage('cart',state.array);
     },
     /* 减少 */
     splice:(state,action)=>{
-      let initLan = getStorage('language');
       let clone = _.cloneDeep(state.array);
       clone.splice(action.payload,1);
       state.array = clone;
-      setStorage('cart',_.sortBy(state.array,`name[${initLan}]`));
-      // console.log(state.array);
+      setStorage('cart',state.array);
     },
     /* 清空 */
     clear:(state)=>{

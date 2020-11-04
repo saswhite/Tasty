@@ -1,20 +1,20 @@
 
-import React,{ useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { v4 } from 'uuid';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 /* common */
 import { getStorage,setStorage } from '../../Common/utils';
 
 /* action */
-import { pushItem ,cart } from './state/reducer';
+import { pushItem } from './state/reducer';
 import { setIsDisabledTrue,setIsDisabledFalse } from '../../Features/Menu/state/reducer';
 
 /* style */
-import './menuBox.scss';
+import './menubox.scss';
 
 export default function MenuBox ({ title,foods }) {
 
@@ -22,15 +22,9 @@ export default function MenuBox ({ title,foods }) {
 
   const initLan = getStorage('language');
 
-  const cartArray = useSelector(cart);
-
   const dispatch = useDispatch();
 
   const params = useParams();
-
-  useEffect(() => {
-    renderFoods();
-  }, [ cartArray ]);
 
   let renderDisabled = ()=>{
     if(cartList === [] || !cartList){
