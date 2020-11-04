@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import { v4 } from 'uuid';
 
-import moment from 'moment-timezone';
+// import moment from 'moment-timezone';
 
 import { init,get } from '../../Common/Intl';
 
@@ -20,6 +20,9 @@ import { language } from '../../Redux/Reducer/header';
 
 /* style */
 import './rest.scss';
+
+/* function */
+import { isClosed } from '../../Common/utils';
 
 export default function Restaurant () {
 
@@ -41,40 +44,12 @@ export default function Restaurant () {
   }, [ lan ]);
 
   /* 判断是否关门 */
-  function isClosed  (){
+  function checkClosed  (){
     let list = rest.list;
-    let date = new Date();
-    var newYork = moment.tz(date,'America/New_York');
-    let checkTime = newYork.hours() * 60 + newYork.minutes();
     let newArr = [];
     _.map(list,(item)=>{
-      if(item.closed){
-        newArr.push({ ...item,closed:true });
-      }else{
-        let flag = true;
-        _.map(item.hours,(hourItem)=>{
-          if(hourItem.dayOfWeek == newYork.day()){
-            /* 开门 */
-            if(hourItem.start <= checkTime && checkTime <= hourItem.end){
-              flag = false;
-            }
-            /* 不在开店时间内 */
-            else{
-              flag = true;
-            }
-          }
-          /* 一整天不开门 */
-          else{
-            flag = true;
-
-          }
-        });
-        if(flag){
-          newArr.push({ ...item,closed:true });
-        }else{
-          newArr.push({ ...item,closed:false });
-        }
-      }
+      let result = isClosed(item);
+      newArr.push({ ...item,closed:result });
     });
     return newArr;
   }
@@ -82,9 +57,13 @@ export default function Restaurant () {
   /* 排序 */
   function orderRest (){
     /* 先判断是否开门 */
-    let array = isClosed();
+    let array = checkClosed();
     /* 排序 */
     array = _.orderBy(array,[ 'closed', 'featured','zscore' ],[ 'asc','desc','desc' ]);
+    // let test = _.map(array,(item)=>{
+    //   return item.closed;
+    // });
+    // console.log(test);
     return array;
   }
 
