@@ -1,4 +1,4 @@
-import React,{ useEffect,useState,useRef } from 'react';
+import React,{ useState,useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation,useHistory } from 'react-router-dom';
 import _ from 'lodash';
@@ -36,20 +36,10 @@ export default function Header () {
   const location = useLocation();
   const history = useHistory();
 
-  /* 页面元素刚加载的时候 */
-  useEffect(() => {
-    /* 给历史订单按钮的状态初始化 */
-    // renderHistoryBtn();
-    /* 给页面加点击事件 */
-    document.addEventListener('mousedown', handleClickOutside);
-    // return () => {
-    //   document.removeEventListener('mousedown', handleClickOutside);
-    // };
-  }, []);
-
   let handleClickOutside = (e)=>{
     if(profileRef.current && !profileRef.current.contains(e.target)){
       dispatch(hideProfile());
+      document.removeEventListener('mousedown', handleClickOutside);
     }
   };
 
@@ -65,7 +55,8 @@ export default function Header () {
     if(isShow){
       return (
         <div className="profile-drop-down" ref={ profileRef }>
-          { renderHistoryBtn() }
+          { renderLoginBtn()}{/* 登陆按钮 */}
+          {renderOrderBtn() }{/* 订单按钮 */}
           <div className="language-button">
             {/* 中文按钮 */}
             <button
@@ -83,46 +74,40 @@ export default function Header () {
     }
   };
 
-  /* 历史订单按钮 */
-  let renderHistoryBtn = ()=>{
-    if(_.includes(loginPass,location.pathname)){//如果在login页面里面
+  /* 登陆按钮 */
+  let renderLoginBtn = ()=>{
+    if(_.includes(loginPass,location.pathname)){
       return null;
-    }else{//如果不在login页面里面
-      if(_.includes(orderPass,location.pathname)){//如果在order页面里面
-        if(isLogout){//如果点了登出按钮
-          return renderLoginBtn();
-        }
-      }else {//如果不在order页面里面
-        if(initUser){//如果登陆了
-          return (
-            <div>
-              {isLogout ? renderLoginBtn() : renderOrderBtn()}
-            </div>
-          );
-        }else {//如果没有登陆
-          return renderLoginBtn();
-        }
+    }else {
+      if(isLogout || !initUser) {
+        return (<button
+          className="profile-button log-out"
+          onClick={ ()=>{
+            setIsLogout(true);
+            history.push('/login');
+          } }
+          type="button">{get('login.login')}</button>);
+      }else{
+        return null;
       }
     }
   };
 
-  /*  */
-  let renderLoginBtn = ()=>{
-    return (<button
-      className="profile-button log-out"
-      onClick={ ()=>{
-        setIsLogout(true);
-        history.push('/login');
-      } }
-      type="button">{get('login.login')}</button>);
-  };
-
+  /* 订单按钮 */
   let renderOrderBtn = ()=>{
-    return (<button className="order-btn"
-      onClick={ pushOrder }
-      type="button">
-      {get('order').title}
-    </button>);
+    if(_.includes(loginPass,location.pathname) || _.includes(orderPass,location.pathname)){
+      return null;
+    }else {
+      if(initUser && !isLogout ) {
+        return (<button className="order-btn"
+          onClick={ pushOrder }
+          type="button">
+          {get('order').title}
+        </button>);
+      }else {
+        return null;
+      }
+    }
   };
 
   /* 登出按钮 */
@@ -152,7 +137,7 @@ export default function Header () {
           className="profile-logo"
           onClick={ ()=>{
             dispatch(showProfile());
-
+            document.addEventListener('mousedown', handleClickOutside);
           } }/>
         {  renderProfile() }
       </div>
